@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#14110f" />
+    <meta name="description" content="Sankofa Trails: a 2D browser game that explores African history and culture." />
+    <title>Sankofa Trails</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #14110f; overflow: hidden; }
+      body { touch-action: none; -webkit-user-select: none; user-select: none; font-family: system-ui, sans-serif; }
+      #game { position: fixed; inset: 0; }
+      #game canvas { display: block; }
+      .overlay {
+        display: none; position: fixed; inset: 0; z-index: 10; padding: 24px;
+        align-items: center; justify-content: center; text-align: center;
+        background: #14110f; color: #f5efe6; font-size: 20px; line-height: 1.4;
+      }
+      /* Phones and tablets held upright: the game is designed for landscape. */
+      @media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; } }
+      noscript.overlay { display: flex; }
+    </style>
+  </head>
+  <body>
+    <div id="game"></div>
+    <div id="rotate" class="overlay">Please turn your device sideways (landscape) to play Sankofa Trails.</div>
+    <noscript class="overlay">Sankofa Trails needs JavaScript to run. Please enable it in your browser.</noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

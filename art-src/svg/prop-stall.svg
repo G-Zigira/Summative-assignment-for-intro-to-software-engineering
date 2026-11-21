@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="320" viewBox="0 0 360 320" style="display:block">
+  <defs><linearGradient id="wood" x1="0" x2="1"><stop offset="0" stop-color="#a8693a"/><stop offset="1" stop-color="#7a4a2a"/></linearGradient></defs>
+  <ellipse cx="180" cy="304" rx="150" ry="14" fill="#000" opacity=".28"/>
+  <rect x="34" y="70" width="12" height="230" fill="url(#wood)"/><rect x="314" y="70" width="12" height="230" fill="url(#wood)"/>
+  <path d="M20 70 L60 22 L300 22 L340 70 Z" fill="#8f3a1f"/>
+  <path d="M30 70 L66 28 L294 28 L330 70 Z" fill="#c4572f"/>
+  <path d="M30 70 L67.5 70 L70 106 Q50 120 30 106 Z" fill="#c4572f"/><path d="M67.5 70 L105 70 L107.5 106 Q87.5 120 67.5 106 Z" fill="#f3e3bf"/><path d="M105 70 L142.5 70 L145 106 Q125 120 105 106 Z" fill="#c4572f"/><path d="M142.5 70 L180 70 L182.5 106 Q162.5 120 142.5 106 Z" fill="#f3e3bf"/><path d="M180 70 L217.5 70 L220 106 Q200 120 180 106 Z" fill="#c4572f"/><path d="M217.5 70 L255 70 L257.5 106 Q237.5 120 217.5 106 Z" fill="#f3e3bf"/><path d="M255 70 L292.5 70 L295 106 Q275 120 255 106 Z" fill="#c4572f"/><path d="M292.5 70 L330 70 L332.5 106 Q312.5 120 292.5 106 Z" fill="#f3e3bf"/>
+  <rect x="34" y="200" width="292" height="16" rx="3" fill="#a8693a"/>
+  <rect x="44" y="216" width="272" height="84" fill="#7a4a2a"/>
+  <path d="M44 216 L316 216 L316 232 L44 232 Z" fill="#000" opacity=".15"/>
+  <path d="M60 232 l30 0 l-15 24 z M120 232 l30 0 l-15 24 z M180 232 l30 0 l-15 24 z M240 232 l30 0 l-15 24 z" fill="#e0a030" opacity=".85"/>
+  <g>
+    <ellipse cx="96" cy="196" rx="44" ry="22" fill="#8a5a2a"/><rect x="52" y="178" width="88" height="22" fill="#8a5a2a"/>
+    <circle cx="74" cy="172" r="12" fill="#e5802f"/><circle cx="98" cy="166" r="12" fill="#f0a030"/><circle cx="120" cy="172" r="12" fill="#e5802f"/><circle cx="86" cy="182" r="12" fill="#f0a030"/><circle cx="110" cy="182" r="12" fill="#e5802f"/>
+    <ellipse cx="228" cy="196" rx="44" ry="22" fill="#8a5a2a"/><rect x="184" y="178" width="88" height="22" fill="#8a5a2a"/>
+    <circle cx="206" cy="172" r="12" fill="#6f9a43"/><circle cx="230" cy="166" r="12" fill="#a6c45e"/><circle cx="252" cy="172" r="12" fill="#6f9a43"/><circle cx="218" cy="182" r="12" fill="#a6c45e"/><circle cx="242" cy="182" r="12" fill="#6f9a43"/>
+  </g>
+  <path d="M290 200 C292 170 304 160 312 164 L312 200 Z" fill="#4aa3a0"/></svg>

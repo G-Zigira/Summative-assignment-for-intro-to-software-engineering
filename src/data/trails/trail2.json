@@ -1,0 +1,40 @@
+{
+  "id": "trail2",
+  "order": 2,
+  "title": "Trail 2 (placeholder)",
+  "summary": "PLACEHOLDER so the unlock chain (FR 3.3) can be tested. Replace with a real trail.",
+  "review": {
+    "status": "sample",
+    "reviewer": null,
+    "date": null
+  },
+  "startScene": "t2-s1",
+  "scenes": [
+    {
+      "id": "t2-s1",
+      "title": "Placeholder",
+      "area": "placeholder",
+      "final": true,
+      "playerStart": {
+        "x": 120,
+        "y": 200
+      },
+      "npc": {
+        "name": "Guide",
+        "x": 700,
+        "y": 270,
+        "sprite": "guide"
+      },
+      "startNode": "t2-s1-n1",
+      "nodes": [
+        {
+          "id": "t2-s1-n1",
+          "type": "line",
+          "speaker": "Guide",
+          "text": "This trail has not been written yet.",
+          "next": null
+        }
+      ]
+    }
+  ]
+}

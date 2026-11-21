@@ -1,0 +1,261 @@
+{
+  "id": "trail1",
+  "order": 1,
+  "title": "The Bird Looks Back",
+  "summary": "SAMPLE trail used to build and test the engine. Replace with researched content.",
+  "review": {
+    "status": "sample",
+    "reviewer": null,
+    "date": null
+  },
+  "startScene": "t1-s1",
+  "scenes": [
+    {
+      "id": "t1-s1",
+      "title": "The Carved Bird",
+      "area": "courtyard",
+      "nextScene": "t1-s2",
+      "playerStart": {
+        "x": 320,
+        "y": 420
+      },
+      "npc": {
+        "name": "Elder",
+        "x": 700,
+        "y": 300,
+        "sprite": "elder"
+      },
+      "obstacles": [
+        {
+          "x": 420,
+          "y": 270,
+          "w": 120,
+          "h": 80,
+          "prop": "stall"
+        }
+      ],
+      "startNode": "t1-s1-n1",
+      "nodes": [
+        {
+          "id": "t1-s1-n1",
+          "type": "line",
+          "speaker": "Narrator",
+          "text": "You step into a quiet courtyard. Above the doorway sits a carved bird. Its feet face forward, but its head is turned to look backward.",
+          "next": "t1-s1-n2"
+        },
+        {
+          "id": "t1-s1-n2",
+          "type": "line",
+          "speaker": "Elder",
+          "text": "Welcome, traveller. Tell me, why do you think the bird looks back?",
+          "next": "t1-s1-d1"
+        },
+        {
+          "id": "t1-s1-d1",
+          "type": "decision",
+          "prompt": "Why does the bird look back?",
+          "options": [
+            {
+              "id": "a",
+              "text": "It is checking for danger.",
+              "outcome": "A fair guess. But the carving is telling a different story.",
+              "next": "t1-s1-c1"
+            },
+            {
+              "id": "b",
+              "text": "To remember what it left behind.",
+              "outcome": "Yes. That is exactly the idea behind this symbol.",
+              "unlocksCodex": [
+                "codex-adinkra"
+              ],
+              "next": "t1-s1-c1"
+            }
+          ]
+        },
+        {
+          "id": "t1-s1-c1",
+          "type": "context",
+          "title": "Sankofa",
+          "text": "Sankofa is a word from the Akan language of Ghana. It is often shown as a bird that looks backward while its feet face forward. It carries the idea that we can return to the past to learn what we need for the future.",
+          "unlocksCodex": [
+            "codex-sankofa"
+          ],
+          "next": "t1-s1-n3"
+        },
+        {
+          "id": "t1-s1-n3",
+          "type": "line",
+          "speaker": "Elder",
+          "text": "Keep that in mind as we walk on.",
+          "next": null
+        }
+      ],
+      "props": [
+        {
+          "key": "carved-door",
+          "x": 480,
+          "y": 172
+        },
+        {
+          "key": "baobab",
+          "x": 700,
+          "y": 200
+        },
+        {
+          "key": "pots",
+          "x": 170,
+          "y": 250
+        },
+        {
+          "key": "rug",
+          "x": 330,
+          "y": 470
+        },
+        {
+          "key": "bush",
+          "x": 110,
+          "y": 505
+        }
+      ]
+    },
+    {
+      "id": "t1-s2",
+      "title": "The Patterned Wall",
+      "area": "wall-garden",
+      "nextScene": "t1-s3",
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Elder",
+        "x": 760,
+        "y": 400,
+        "sprite": "elder"
+      },
+      "startNode": "t1-s2-n1",
+      "nodes": [
+        {
+          "id": "t1-s2-n1",
+          "type": "line",
+          "speaker": "Elder",
+          "text": "Look at the wall behind me. Every pattern on it is a symbol with a meaning.",
+          "next": "t1-s2-d1"
+        },
+        {
+          "id": "t1-s2-d1",
+          "type": "decision",
+          "prompt": "What would you like to learn about first?",
+          "options": [
+            {
+              "id": "a",
+              "text": "The symbols on the wall.",
+              "outcome": "A good place to start.",
+              "next": "t1-s2-c1"
+            },
+            {
+              "id": "b",
+              "text": "The people who made them.",
+              "outcome": "We will come to that. First, the symbols themselves.",
+              "next": "t1-s2-c1"
+            }
+          ]
+        },
+        {
+          "id": "t1-s2-c1",
+          "type": "context",
+          "title": "Adinkra",
+          "text": "Adinkra are visual symbols associated with the Akan peoples of West Africa. Each symbol stands for an idea or a proverb. They appear on cloth, pottery, walls and many other things.",
+          "unlocksCodex": [
+            "codex-adinkra"
+          ],
+          "next": "t1-s2-n2"
+        },
+        {
+          "id": "t1-s2-n2",
+          "type": "line",
+          "speaker": "Elder",
+          "text": "Come, there is one more place I want to show you.",
+          "next": null
+        }
+      ],
+      "props": [
+        {
+          "key": "bush",
+          "x": 420,
+          "y": 300
+        },
+        {
+          "key": "rock",
+          "x": 600,
+          "y": 520
+        },
+        {
+          "key": "drum",
+          "x": 860,
+          "y": 280
+        }
+      ]
+    },
+    {
+      "id": "t1-s3",
+      "title": "The Road Ahead",
+      "area": "road",
+      "final": true,
+      "playerStart": {
+        "x": 120,
+        "y": 200
+      },
+      "npc": {
+        "name": "Elder",
+        "x": 760,
+        "y": 270,
+        "sprite": "elder"
+      },
+      "startNode": "t1-s3-n1",
+      "nodes": [
+        {
+          "id": "t1-s3-n1",
+          "type": "line",
+          "speaker": "Elder",
+          "text": "These ideas travelled with people across a whole country. Let me tell you where we are.",
+          "next": "t1-s3-c1"
+        },
+        {
+          "id": "t1-s3-c1",
+          "type": "context",
+          "title": "Ghana",
+          "text": "Ghana is a country in West Africa on the Gulf of Guinea. Its capital is Accra. The Akan language family, which includes Twi and Fante, is widely spoken there.",
+          "unlocksCodex": [
+            "codex-ghana"
+          ],
+          "next": "t1-s3-n2"
+        },
+        {
+          "id": "t1-s3-n2",
+          "type": "line",
+          "speaker": "Elder",
+          "text": "That is the end of this sample trail. Well walked.",
+          "next": null
+        }
+      ],
+      "props": [
+        {
+          "key": "signpost",
+          "x": 330,
+          "y": 260
+        },
+        {
+          "key": "baobab",
+          "x": 600,
+          "y": 190
+        },
+        {
+          "key": "rock",
+          "x": 200,
+          "y": 480
+        }
+      ]
+    }
+  ]
+}

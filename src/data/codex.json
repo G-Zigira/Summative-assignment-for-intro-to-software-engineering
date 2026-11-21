@@ -1,0 +1,23 @@
+[
+  {
+    "id": "codex-sankofa",
+    "category": "Terms",
+    "title": "Sankofa",
+    "trailId": "trail1",
+    "text": "A word from the Akan language of Ghana, often shown as a bird looking backward while its feet face forward. It expresses the idea that we can return to the past to learn what we need for the future."
+  },
+  {
+    "id": "codex-adinkra",
+    "category": "Terms",
+    "title": "Adinkra",
+    "trailId": "trail1",
+    "text": "Visual symbols associated with the Akan peoples of West Africa. Each symbol stands for an idea or a proverb. They appear on cloth, pottery, walls and many other things."
+  },
+  {
+    "id": "codex-ghana",
+    "category": "Places",
+    "title": "Ghana",
+    "trailId": "trail1",
+    "text": "A country in West Africa on the Gulf of Guinea. Its capital is Accra. The Akan language family, which includes Twi and Fante, is widely spoken there."
+  }
+]
