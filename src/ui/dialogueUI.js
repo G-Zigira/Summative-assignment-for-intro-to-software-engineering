@@ -1,6 +1,7 @@
 import { CONFIG } from '../config.js';
 import { COLORS } from './theme.js';
 import { makeButton, makeText } from './button.js';
+import { audio } from '../audio/audioManager.js';
 
 // The dialogue / context-panel / choice UI shown at the bottom of the screen.
 // It only draws things and reports clicks; the story logic lives in systems/dialogue.js.
@@ -19,6 +20,7 @@ export class DialogueUI {
     /** Option ids in display order, for the 1-4 number keys. */
     this.optionIds = [];
     this.onChoose = null;
+    this.typing = null; // timer while text is still appearing
   }
 
   get isOpen() {
@@ -26,6 +28,8 @@ export class DialogueUI {
   }
 
   hide() {
+    this.typing?.remove();
+    this.typing = null;
     this.items.forEach((i) => i.destroy());
     this.items = [];
     this.confirm = null;
@@ -63,7 +67,7 @@ export class DialogueUI {
    * A text panel with a title/speaker, body and one button.
    * Used for dialogue lines, outcomes, context panels and the trail-complete message.
    */
-  showMessage({ title, text, buttonLabel = 'Continue', onClose, context = false }) {
+  showMessage({ title, text, buttonLabel = 'Continue', onClose, context = false, type = true }) {
     this.hide();
     const titleText = title
       ? this.#text(title, 22, {
@@ -72,14 +76,27 @@ export class DialogueUI {
         })
       : null;
     const body = this.#text(text, 20);
+    // Letters appear one by one, like someone telling the story. The panel is sized for the full
+    // text first, and any press (Space/Enter, click, the button) shows the rest before moving on.
+    let revealed = text.length;
+    const finishTyping = () => {
+      if (revealed >= text.length) return false;
+      revealed = text.length;
+      body.setText(text);
+      this.typing?.remove();
+      this.typing = null;
+      return true;
+    };
+    const advance = () => { if (!finishTyping()) onClose?.(); };
     const button = makeButton(this.scene, {
       width: 180, height: 56, label: buttonLabel, fontSize: 20, depth: 22,
-      onClick: () => onClose?.(),
+      onClick: advance,
     });
     this.items.push(button);
 
     const height = PAD + (titleText ? titleText.height + 8 : 0) + body.height + 14 + button.height + PAD;
     const top = this.#panel(height, context ? COLORS.context : COLORS.accent);
+    this.items[this.items.findIndex((i) => i.type === 'Rectangle')]?.on('pointerup', advance);
 
     let y = top + PAD;
     if (titleText) {
@@ -88,7 +105,21 @@ export class DialogueUI {
     }
     body.setPosition(X0 + PAD, y);
     button.setPosition(X0 + PANEL_W - PAD - button.width / 2, top + height - PAD - button.height / 2);
-    this.confirm = () => onClose?.();
+    this.confirm = advance;
+
+    if (type && CONFIG.TYPE_MS_PER_CHAR > 0 && text.length > 0) {
+      revealed = 0;
+      body.setText('');
+      this.typing = this.scene.time.addEvent({
+        delay: CONFIG.TYPE_MS_PER_CHAR, loop: true,
+        callback: () => {
+          revealed = Math.min(text.length, revealed + 1);
+          body.setText(text.slice(0, revealed));
+          if (revealed % 4 === 0) audio.playSfx('textBlip');
+          if (revealed >= text.length) { this.typing?.remove(); this.typing = null; }
+        },
+      });
+    }
   }
 
   /** A context panel (FR 4.1): same layout, teal border. */

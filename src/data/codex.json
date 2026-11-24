@@ -19,5 +19,131 @@
     "title": "Ghana",
     "trailId": "trail1",
     "text": "A country in West Africa on the Gulf of Guinea. Its capital is Accra. The Akan language family, which includes Twi and Fante, is widely spoken there."
+  },
+  {
+    "id": "codex-jeli",
+    "category": "Terms",
+    "title": "Jeli (griot)",
+    "trailId": "trail2",
+    "text": "A jeli (plural jeliw, often called a griot in English) is a West African oral historian, musician and adviser, especially among the Mande peoples. Jeliw keep genealogies, histories and epics in memory and pass them on by performing them, often with instruments such as the kora or balafon."
+  },
+  {
+    "id": "codex-kora",
+    "category": "Terms",
+    "title": "Kora",
+    "trailId": "trail2",
+    "text": "A harp-lute with 21 strings made from a large calabash covered in skin, played by jeliw of the Mande peoples of West Africa. The music accompanies songs and epics, and it takes years of training to play well."
+  },
+  {
+    "id": "codex-sundiata",
+    "category": "Figures",
+    "title": "Sundiata Keita",
+    "trailId": "trail2",
+    "text": "Remembered in oral tradition as the founder of the Mali Empire in the 13th century. In the epic he is a prince who could not walk as a child, was forced into exile, and returned to defeat Soumaoro Kanté. He is called the Lion of Mali."
+  },
+  {
+    "id": "codex-sogolon",
+    "category": "Figures",
+    "title": "Sogolon",
+    "trailId": "trail2",
+    "text": "In the Epic of Sundiata, the mother of Sundiata and the wife of King Maghan Kon Fatta. She endured mockery and exile, yet never lost faith in her son. Her story is a symbol of a mother's patience and courage."
+  },
+  {
+    "id": "codex-kangaba",
+    "category": "Places",
+    "title": "Kangaba",
+    "trailId": "trail2",
+    "text": "A Mande kingdom in the upper Niger region, in present-day Mali. In the epic it is the homeland of Sundiata's family, and the place he returns to after exile."
+  },
+  {
+    "id": "codex-blacksmith",
+    "category": "Terms",
+    "title": "Blacksmiths (numu)",
+    "trailId": "trail2",
+    "text": "Among the Mande peoples, blacksmiths (numu) are respected specialists who work iron and other materials and often have special social roles. In the Epic of Sundiata, the iron rods that help Sundiata stand are made by a blacksmith."
+  },
+  {
+    "id": "codex-baobab",
+    "category": "Terms",
+    "title": "Baobab",
+    "trailId": "trail2",
+    "text": "A very large tree found in the savanna regions of Africa. It can live for hundreds of years and store water in its trunk. Its leaves, fruit and bark are used by many communities. In the epic, Sundiata uproots one for his mother."
+  },
+  {
+    "id": "codex-mema",
+    "category": "Places",
+    "title": "Mema",
+    "trailId": "trail2",
+    "text": "A kingdom in the Niger bend region that, in the epic, gave shelter to Sundiata during his exile. Its ruler is said to have treated him like a son and helped him gather the army that returned to Mali."
+  },
+  {
+    "id": "codex-soumaoro",
+    "category": "Figures",
+    "title": "Soumaoro Kanté",
+    "trailId": "trail2",
+    "text": "King of the Sosso in the epic, who conquered Kangaba and the Mande lands in the early 13th century. Oral tradition describes him as a feared warrior and sorcerer, and as Sundiata's rival."
+  },
+  {
+    "id": "codex-kirina",
+    "category": "Places",
+    "title": "Battle of Kirina",
+    "trailId": "trail2",
+    "text": "The battle where, traditionally around 1235, Sundiata's allied army defeated Soumaoro Kanté. It is remembered as the moment the Mali Empire began. Oral traditions are our main source, so details and dates vary between accounts."
+  },
+  {
+    "id": "codex-mali-empire",
+    "category": "Places",
+    "title": "Mali Empire",
+    "trailId": "trail2",
+    "text": "A West African empire that grew from Sundiata's victory, from about the 13th to the 17th century. It controlled trade in gold and salt. Its ruler Mansa Musa made a famous pilgrimage to Mecca in 1324, and Timbuktu became a centre of learning."
+  },
+  {
+    "id": "codex-kouroukan",
+    "category": "Terms",
+    "title": "Kouroukan Fouga",
+    "trailId": "trail2",
+    "text": "A set of rules for peaceful living, traditionally said to have been agreed at Sundiata's assembly after the victory at Kirina. It covers matters such as respect, safety and the protection of nature, and jeliw still recite it. UNESCO has recognised the Manden Charter as cultural heritage."
+  },
+  {
+    "id": "codex-akan",
+    "category": "Terms",
+    "title": "Akan people",
+    "trailId": "trail3",
+    "text": "A large group of peoples in present-day Ghana and Ivory Coast who speak related languages such as Twi and Fante. They are known for Adinkra symbols, kente cloth and the Anansi stories."
+  },
+  {
+    "id": "codex-anansi",
+    "category": "Figures",
+    "title": "Anansi",
+    "trailId": "trail3",
+    "text": "A trickster hero of Akan folklore, shown as a spider, a man, or both. His stories, called anansesem, entertain and teach lessons about cleverness, greed and humility. They spread to the Caribbean and the Americas, where Anansi tales are still told."
+  },
+  {
+    "id": "codex-ntikuma",
+    "category": "Figures",
+    "title": "Ntikuma",
+    "trailId": "trail3",
+    "text": "Anansi's young son in many versions of the Pot of Wisdom tale. His simple idea, to tie the pot to his back, shows that even a child can notice what a clever elder misses."
+  },
+  {
+    "id": "codex-oral-tradition",
+    "category": "Terms",
+    "title": "Oral tradition",
+    "trailId": "trail3",
+    "text": "Knowledge, stories, laws and histories passed from person to person by speaking and performing, rather than by writing. Oral traditions are a main way many African societies have kept their history, and they are the source of both the Anansi tales and the Epic of Sundiata."
+  },
+  {
+    "id": "codex-proverbs",
+    "category": "Terms",
+    "title": "Akan proverbs",
+    "trailId": "trail3",
+    "text": "Short sayings that hold lessons, used in everyday speech and by elders in conversations and decisions. One Akan proverb says that one head does not go into council, meaning that wise decisions are made together."
+  },
+  {
+    "id": "codex-cowrie",
+    "category": "Terms",
+    "title": "Cowrie shells",
+    "trailId": "trail3",
+    "text": "Small shells used as money, jewellery and decoration across much of West Africa for centuries, and traded over long distances. In stories and art they can stand for wealth, protection or status."
   }
 ]

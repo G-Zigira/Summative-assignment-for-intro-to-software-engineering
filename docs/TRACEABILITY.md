@@ -60,3 +60,12 @@ SRS, or change `systems/device.js` and its test; they should agree.
 - Tutorial for the usability test ("move, interact, advance dialogue, open the Codex").
 - A **completion code** on the trail-complete screen, which the hypothesis uses to confirm completion in the post-game survey. See [PILOT-PLAN.md](PILOT-PLAN.md).
 - Settings menu (FR 5.1).
+
+## Added in 0.4.0
+| Requirement | Where |
+|---|---|
+| FR 5.1 Settings (volume, text size, controls) | `SettingsScene`, `settings.js`, e2e "settings" |
+| Trails 2 and 3, tutorial trail | `src/data/trails/trail2.json`, `trail3.json`, e2e playthroughs |
+| Story pieces (suggested FR) | `items`, `tests/items.test.js`, e2e "story piece" |
+| Completion code | `unlocks.js completionCode`, tests |
+| Double jump / cowries (suggested FR 6.1 AC 7) | `runner.js`, `tests/runner.test.js` |

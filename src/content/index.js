@@ -4,9 +4,10 @@
 
 import trail1 from '../data/trails/trail1.json';
 import trail2 from '../data/trails/trail2.json';
+import trail3 from '../data/trails/trail3.json';
 import codex from '../data/codex.json';
 
-export const TRAILS = [trail1, trail2].sort((a, b) => a.order - b.order);
+export const TRAILS = [trail1, trail2, trail3].sort((a, b) => a.order - b.order);
 export const TRAIL_ORDER = TRAILS.map((t) => t.id);
 export const CODEX = codex;
 

@@ -51,3 +51,31 @@ export function recordChoice(save, decisionId, optionId) {
   const others = save.choices.filter((c) => c.decisionId !== decisionId);
   return { ...save, choices: [...others, { decisionId, optionId }] };
 }
+
+/** Story pieces (objects the player touches). Returns {save, isNew}. */
+export function collectFragment(save, id) {
+  const found = save.fragments ?? [];
+  if (found.includes(id)) return { save, isNew: false };
+  return { save: { ...save, fragments: [...found, id] }, isNew: true };
+}
+
+/** How many of a trail's story pieces were found: {found, total}. */
+export function fragmentProgress(save, trail) {
+  const ids = (trail.scenes ?? []).flatMap((s) => (s.items ?? []).map((i) => i.id));
+  const found = ids.filter((id) => (save.fragments ?? []).includes(id)).length;
+  return { found, total: ids.length };
+}
+
+/**
+ * The pilot's completion code (docs/PILOT-PLAN.md): shown when a trail is finished and typed
+ * into the post-game survey. Derived from the trail and the player's choices, e.g. "SK-2-7QF3".
+ * It is a checksum, not a secret: it only tells the researchers the form was filled by someone
+ * who reached the end.
+ */
+export function completionCode(save, trail) {
+  const ids = new Set((trail.scenes ?? []).flatMap((s) => (s.nodes ?? []).map((n) => n.id)));
+  const picked = save.choices.filter((c) => ids.has(c.decisionId)).map((c) => `${c.decisionId}:${c.optionId}`).sort().join('|');
+  let h = 2166136261;
+  for (const ch of `${trail.id}|${picked}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
+  return `SK-${trail.order}-${h.toString(36).toUpperCase().padStart(4, '0').slice(-4)}`;
+}

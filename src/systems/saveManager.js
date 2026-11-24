@@ -20,6 +20,7 @@ export function createNewSave({ firstTrailId, now = () => new Date() } = {}) {
     completedTrails: [],
     unlockedCodex: [],
     choices: [], // [{decisionId, optionId}]
+    fragments: [], // ids of the story pieces (touched objects) found
     settings: defaultSettings(),
   };
 }
@@ -45,6 +46,10 @@ export function validateSave(data) {
     !Array.isArray(data.choices) ||
     !data.choices.every((c) => c && isString(c.decisionId) && isString(c.optionId))
   ) {
+    return { valid: false, reason: 'corrupt' };
+  }
+  // `fragments` was added after the first release: older saves without it stay valid.
+  if (data.fragments !== undefined && (!Array.isArray(data.fragments) || !data.fragments.every(isString))) {
     return { valid: false, reason: 'corrupt' };
   }
   if (!isStringOrNull(data.trailId) || !isStringOrNull(data.sceneId) || !isStringOrNull(data.areaId)) {
@@ -88,7 +93,7 @@ export class SaveManager {
     }
     const check = validateSave(parsed);
     if (!check.valid) return { status: check.reason };
-    return { status: 'ok', save: { ...parsed, settings: sanitizeSettings(parsed.settings) } };
+    return { status: 'ok', save: { ...parsed, fragments: parsed.fragments ?? [], settings: sanitizeSettings(parsed.settings) } };
   }
 
   /**

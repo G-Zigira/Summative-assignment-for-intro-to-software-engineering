@@ -137,3 +137,6 @@ Put one after every key historical event and after every decision.
 | Every `unlocksCodex` id exists; every Codex `trailId` is a real trail | FR 4.2.1 |
 | NPC inside the play area; start/NPC not under touch controls (warning) | FR 2.2 |
 | Review status is `reviewed` with reviewer and date (warning until then) | Business rules |
+
+## Story pieces (`items`) and the tutorial flag (0.4.0)
+A scene may have up to 4 `items`: `{ "id": "t2-i1", "prop": "kora", "x": 300, "y": 300, "title": "...", "text": "... (max 45 words)", "unlocksCodex": ["codex-id"] }`. `id` is unique within the trail, `prop` must be a known prop, `y` should be 190 or more (below the back wall). The player touches the item (E / tap / click) to read it; collected ids are saved in `fragments`. A trail may set `"tutorial": true` (shown as "Tutorial" in trail select). Validate with `npm run validate:content`.

@@ -20,7 +20,7 @@ export class TitleScene extends Phaser.Scene {
     }
     // Dark bands keep the text readable (NFR 3: contrast >= 4.5:1) over the picture.
     this.add.rectangle(W / 2, 140, W, 150, 0x000000, 0.55).setDepth(-1);
-    this.add.rectangle(W / 2, 310, 400, 190, 0x000000, 0.5).setDepth(-1);
+    this.add.rectangle(W / 2, 322, 400, 250, 0x000000, 0.5).setDepth(-1);
     audio.playMusic('title');
 
     makeText(this, W / 2, 110, 'Sankofa Trails', 54, { fontStyle: 'bold', color: COLORS.accentText }).setOrigin(0.5);
@@ -33,12 +33,12 @@ export class TitleScene extends Phaser.Scene {
     const needsConfirm = session.storageAvailable && session.loadStatus !== 'none';
 
     makeButton(this, {
-      x: W / 2, y: 270, width: 320, label: 'Continue', enabled: canContinue,
+      x: W / 2, y: 250, width: 320, label: 'Continue', enabled: canContinue,
       onClick: () => this.#continue(),
     });
 
     const newGame = makeButton(this, {
-      x: W / 2, y: 350, width: 320, label: 'New Game',
+      x: W / 2, y: 322, width: 320, label: 'New Game',
       onClick: () => {
         if (needsConfirm && !this.confirming) {
           this.confirming = true;
@@ -47,6 +47,15 @@ export class TitleScene extends Phaser.Scene {
         }
         startNewGame();
         this.scene.start('TrailSelectScene');
+      },
+    });
+
+    makeButton(this, {
+      x: W / 2, y: 394, width: 320, label: 'Settings',
+      onClick: () => {
+        this.scene.launch('SettingsScene', { from: 'TitleScene' });
+        this.scene.bringToTop('SettingsScene');
+        this.scene.pause();
       },
     });
 

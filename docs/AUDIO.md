@@ -34,3 +34,8 @@ Empty slots (`null`) are silent, so the game runs fine with no audio at all.
 - **Music loops** should be 30–90 s, mono or stereo 128 kbps. Keep the total audio small: NFR 2 gives a 5 s load budget on 9 Mbps (about 5 MB for everything including pictures; currently pictures use ~1 MB).
 - **Add a new slot**: add a line to `MUSIC` or `SFX`, then call `audio.playMusic('slot')` / `audio.playSfx('slot')` where you want it (`import { audio } from '../audio/audioManager.js'`).
 - Audio can't be checked by the automated tests; listen for it by hand on desktop and a phone.
+
+## What ships now (v0.4.0)
+Every slot is filled with a **synthesized placeholder** made by `audio-src/make_audio.py` (`npm run audio`, needs python3, numpy, scipy, ffmpeg). Files are `.ogg` + `.mp3` in `public/assets/audio/`. They are original and licence-free but simple: **replace them with real recordings (kora, djembe, ambience, professional music) by dropping files with the same names in that folder** and not re-running `npm run audio`.
+New slots in 0.4.0: `SFX.doubleJump`, `SFX.collect` (cowrie / story piece), `SFX.textBlip` (typewriter), and area music `forest`, `kirina`, `big-tree`.
+Volume is set in the Settings screen (Title or Pause).

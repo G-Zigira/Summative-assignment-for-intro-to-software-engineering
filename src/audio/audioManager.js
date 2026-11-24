@@ -54,7 +54,7 @@ class AudioManager {
     this.pending = null;
     const sound = this.game.sound.add(key, { loop, volume: 0 });
     sound.play();
-    this.game.scene.scenes[0]?.tweens?.add({ targets: sound, volume: this.volume * MUSIC_BASE_VOLUME, duration: FADE_MS });
+    this.#fade(sound, this.volume * MUSIC_BASE_VOLUME, FADE_MS);
     this.current = { slot, sound };
   }
 
@@ -62,10 +62,23 @@ class AudioManager {
     const old = this.current;
     this.current = null;
     if (!old?.sound) return;
-    const scene = this.game.scene.scenes[0];
-    if (scene?.tweens) {
-      scene.tweens.add({ targets: old.sound, volume: 0, duration: FADE_MS, onComplete: () => old.sound.destroy() });
-    } else old.sound.destroy();
+    this.#fade(old.sound, 0, FADE_MS, () => old.sound.destroy());
+  }
+
+  /** Smooth volume change driven by the game loop (not a scene, which may be stopped). */
+  #fade(sound, to, ms, onDone) {
+    const from = sound.volume ?? 0;
+    let elapsed = 0;
+    const tick = (_time, delta) => {
+      elapsed += delta;
+      const k = Math.min(1, elapsed / ms);
+      if (sound.manager) sound.setVolume(from + (to - from) * k);
+      if (k >= 1 || !sound.manager) {
+        this.game.events.off('step', tick);
+        onDone?.();
+      }
+    };
+    this.game.events.on('step', tick);
   }
 
   /** Play a one-off sound effect by slot name. */
