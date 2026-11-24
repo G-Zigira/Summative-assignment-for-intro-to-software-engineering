@@ -209,6 +209,36 @@ def sfx_arrive(): return seq(*[(i * 0.11, pluck(hz(m), 0.8, 0.45)) for i, m in e
 def sfx_collect(): return seq((0, bell(hz(88), 0.25, 0.35)), (0.06, bell(hz(95), 0.35, 0.3)))
 def sfx_blip(): return pluck(1400, 0.03, 0.18)
 
+
+def music_horse():
+    rng = np.random.default_rng(21); T = Track(158, 8); root = 55
+    for b in range(8):
+        for k in range(4):  # galloping drum: da-da-DUM
+            T.at(b * 4 + k, thump(78, 0.22, 0.75))
+            T.at(b * 4 + k + 0.5, slap(0.32, seed=k + b))
+            T.at(b * 4 + k + 0.75, slap(0.26, seed=k + b + 9))
+        for k in range(8):
+            T.at(b * 4 + k * 0.5, bass(hz(root - 24 + [0, 0, 3, 0, 5, 3, 7, 5][k]), T.beat * 0.4, 0.38))
+    for s_, m in melody(rng, root + 12, MINOR, 64, 0.8):
+        T.at(s_ * 0.5, pluck(hz(m), 0.45, 0.35))
+    return T.out()
+
+def music_basket():
+    rng = np.random.default_rng(22); T = Track(112, 8); root = 64
+    for b in range(8):
+        T.at(b * 4, bass(hz(root - 24 + [0, 5, 7, 5][b % 4]), T.beat * 1.4, 0.36))
+        T.at(b * 4 + 2, bass(hz(root - 24 + [0, 5, 7, 5][b % 4] + 7), T.beat * 1.2, 0.3))
+        for k in (0, 2): T.at(b * 4 + k, thump(88, 0.25, 0.4))
+        for k in range(8): T.at(b * 4 + k * 0.5, shaker(0.12 if k % 2 else 0.18, seed=k))
+    for s_, m in melody(rng, root + 12, MAJOR, 64, 0.8):
+        T.at(s_ * 0.5, pluck(hz(m), 0.55, 0.3)); T.at(s_ * 0.5, bell(hz(m + 12), 0.5, 0.1))
+    return T.out()
+
+def sfx_throw(): return seq((0, chirp(900, 260, 0.2, 0.35)), (0, noise_burst(0.18, lo=10, vol=0.35, k=18, seed=12)))
+def sfx_soldier_down(): return seq((0, thump(100, 0.3, 0.9)), (0.02, noise_burst(0.15, lo=6, vol=0.6, k=22, seed=13)), (0.12, pluck(hz(48), 0.3, 0.4)))
+def sfx_bad_catch(): return seq((0, bass(110, 0.3, 0.8)), (0.0, chirp(420, 110, 0.25, 0.35)), (0.12, bass(82, 0.35, 0.7)))
+def sfx_game_over(): return seq(*[(i * 0.16, pluck(hz(m), 0.6, 0.45)) for i, m in enumerate([67, 64, 60, 55])])
+
 def music_complete():
     return seq(*[(i * 0.22, pluck(hz(m), 1.4, 0.5)) for i, m in enumerate([57, 60, 64, 69, 72, 76])],
                (1.3, pad([hz(57), hz(64), hz(69)], 3.0, 0.3)))
@@ -217,6 +247,8 @@ TRACKS = {
     'title-theme': music_title, 'courtyard-loop': music_courtyard, 'wall-garden-loop': music_wall_garden,
     'road-loop': music_road, 'forest-loop': music_forest, 'kirina-loop': music_kirina,
     'big-tree-loop': music_big_tree, 'runner-loop': music_runner, 'trail-complete': music_complete,
+    'horse-loop': music_horse, 'basket-loop': music_basket, 'throw-spear': sfx_throw, 'soldier-down': sfx_soldier_down,
+    'bad-catch': sfx_bad_catch, 'game-over': sfx_game_over,
     'click': sfx_click, 'talk': sfx_talk, 'choose': sfx_choose, 'codex-unlock': sfx_codex, 'save': sfx_save,
     'error': sfx_error, 'footstep': sfx_footstep, 'jump': sfx_jump, 'double-jump': sfx_double,
     'crash': sfx_crash, 'arrive': sfx_arrive, 'collect': sfx_collect, 'text-blip': sfx_blip,

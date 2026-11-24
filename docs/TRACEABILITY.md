@@ -61,6 +61,12 @@ SRS, or change `systems/device.js` and its test; they should agree.
 - A **completion code** on the trail-complete screen, which the hypothesis uses to confirm completion in the post-game survey. See [PILOT-PLAN.md](PILOT-PLAN.md).
 - Settings menu (FR 5.1).
 
+## Added in 0.5.0
+| Requirement | Where |
+|---|---|
+| Minigames (suggested FR 6.2) | `horse.js`, `basket.js`, `arcade.js`, `tests/horse.test.js`, `tests/basket.test.js`, `tests/arcade.test.js`, `e2e/minigames.spec.js` |
+| Finale minigames in the trails | `finale` in trail2/trail3 JSON, e2e playthroughs |
+
 ## Added in 0.4.0
 | Requirement | Where |
 |---|---|

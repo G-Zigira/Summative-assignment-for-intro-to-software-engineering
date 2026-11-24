@@ -20,7 +20,7 @@ export class TitleScene extends Phaser.Scene {
     }
     // Dark bands keep the text readable (NFR 3: contrast >= 4.5:1) over the picture.
     this.add.rectangle(W / 2, 140, W, 150, 0x000000, 0.55).setDepth(-1);
-    this.add.rectangle(W / 2, 322, 400, 250, 0x000000, 0.5).setDepth(-1);
+    this.add.rectangle(W / 2, 346, 400, 298, 0x000000, 0.5).setDepth(-1);
     audio.playMusic('title');
 
     makeText(this, W / 2, 110, 'Sankofa Trails', 54, { fontStyle: 'bold', color: COLORS.accentText }).setOrigin(0.5);
@@ -59,6 +59,11 @@ export class TitleScene extends Phaser.Scene {
       },
     });
 
+    makeButton(this, {
+      x: W / 2, y: 466, width: 320, label: 'Mini Games',
+      onClick: () => this.scene.start('ArcadeScene'),
+    });
+
     this.#showNotices(W, H);
   }
 
@@ -70,7 +75,7 @@ export class TitleScene extends Phaser.Scene {
 
   #showNotices(W, H) {
     const notice = (message) =>
-      makeText(this, W / 2, H - 60, message, 20, { color: COLORS.warning, align: 'center', wordWrap: { width: W - 80 } })
+      makeText(this, W / 2, H - 20, message, 16, { color: COLORS.warning, align: 'center', wordWrap: { width: W - 80 } })
         .setOrigin(0.5);
 
     // FR 3.5.1: storage unavailable. Shown once; Continue stays disabled (and Save is disabled in the pause menu).

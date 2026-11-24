@@ -22,7 +22,9 @@ export const MUSIC = {
   kirina: 'kirina-loop',
   'big-tree': 'big-tree-loop',
   placeholder: null,
-  runner: 'runner-loop',         // the running minigame between areas
+  runner: 'runner-loop',
+  horse: 'horse-loop',           // Horse Charge minigame
+  basket: 'basket-loop',         // Wisdom Catch minigame         // the running minigame between areas
   trailComplete: 'trail-complete', // short sting played when a trail is finished (plays once, no loop)
 };
 
@@ -40,7 +42,11 @@ export const SFX = {
   collect: 'collect',           // a story piece found / a cowrie shell collected
   textBlip: 'text-blip',        // plays softly while story text appears letter by letter
   crash: 'crash',               // runner minigame: tripped over an obstacle
-  arrive: 'arrive',             // runner minigame: reached the next area
+  arrive: 'arrive',
+  throwSpear: 'throw-spear',    // Horse Charge: spear thrown
+  soldierDown: 'soldier-down',  // Horse Charge: soldier stopped
+  badCatch: 'bad-catch',        // Wisdom Catch: caught a bad thing (-3 shells)
+  gameOver: 'game-over',        // arcade: the run ended             // runner minigame: reached the next area
 };
 
 export const AUDIO_FORMATS = ['ogg', 'mp3'];

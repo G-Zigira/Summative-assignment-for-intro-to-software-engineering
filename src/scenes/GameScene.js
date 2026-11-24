@@ -143,6 +143,11 @@ export class GameScene extends Phaser.Scene {
 
     // Result of the autosave that happened just before this scene was restarted.
     if (this.startData.saveResult) this.#showSaveResult(this.startData.saveResult);
+    // Coming back from the finale minigame: go straight to the trail-complete screen.
+    if (this.startData.finaleDone) {
+      this.dialogueOpen = true; // so Space / Enter work on the trail-complete message, as in a normal ending
+      this.time.delayedCall(0, () => this.#finishScene({ kind: 'sceneEnd', trailComplete: true, nextSceneId: null }));
+    }
   }
 
   update() {
@@ -348,6 +353,13 @@ export class GameScene extends Phaser.Scene {
   #finishScene(step) {
     this.ui.hide();
     const next = step.trailComplete ? null : this.trail.scenes.find((s) => s.id === step.nextSceneId);
+
+    if (!next && this.story.finale && !this.startData.finaleDone) {
+      // The trail ends with a minigame (docs/MINIGAMES.md). Winning or skipping returns here and completes the trail.
+      const done = { trailId: this.trail.id, sceneId: this.story.id, finaleDone: true };
+      this.scene.start(this.story.finale === 'horse' ? 'HorseScene' : 'BasketScene', { ...done, exitData: done });
+      return;
+    }
 
     if (!next) {
       // SP-3: trail complete. Next trail unlocks, current scene is cleared.

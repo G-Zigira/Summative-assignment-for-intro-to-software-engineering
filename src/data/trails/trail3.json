@@ -366,6 +366,7 @@
       "title": "Wisdom for Everyone",
       "area": "courtyard",
       "final": true,
+      "finale": "basket",
       "playerStart": {
         "x": 120,
         "y": 230
