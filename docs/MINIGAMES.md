@@ -10,6 +10,9 @@ There are three minigames. Each is **pure rules** in `src/systems/` (unit tested
 
 Every minigame also runs from **Mini Games** on the title screen ("arcade mode"): endless, ends when you fail, the best score is kept (`src/systems/arcade.js`, localStorage key `sankofa-trails/arcade`, separate from the save file so the save keeps exactly the SRS fields). In the story the player can always press **Skip**.
 
+## Looks of the running game
+The rules are the same everywhere; the pictures change with the place you travel to: savanna (courtyard, wall garden, Kangaba hall), desert (road, exile plains), ember (forge), battle (Kirina), forest (forest, big tree), village (farm village, village square). In the Mini Games menu each run picks a random look. Obstacles keep their size and hitbox (small, medium, tall); only the picture changes.
+
 ## Horse Charge
 - Keys: **Space / Up / W** jump, **E / Enter / X / F** throw a spear. Mouse: click the left half to jump, the right half to throw. Touch: Jump (left) and Throw (right) buttons.
 - Soldiers walk towards you and **must be stopped** with a spear (they are too tall to jump). Rocks and bushes must be jumped. A spear flies over rocks. Spear cooldown 0.4 s.

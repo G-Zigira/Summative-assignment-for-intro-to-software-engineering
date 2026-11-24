@@ -30,6 +30,9 @@ export class BootScene extends Phaser.Scene {
     initSession(); // FR 3.5.1: detect storage + load the save, never throws
     createAnimations(this);
     audio.init(this.game);
-    this.scene.start('TitleScene');
+    // Wait (briefly) for the heading font so the first screen does not flash a different one.
+    const go = () => this.scene.start('TitleScene');
+    const wait = document.fonts?.load ? Promise.race([document.fonts.load('30px Marcellus'), new Promise((r) => setTimeout(r, 1500))]) : Promise.resolve();
+    wait.catch(() => {}).then(go);
   }
 }

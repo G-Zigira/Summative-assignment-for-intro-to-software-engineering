@@ -35,6 +35,8 @@ Empty slots (`null`) are silent, so the game runs fine with no audio at all.
 - **Add a new slot**: add a line to `MUSIC` or `SFX`, then call `audio.playMusic('slot')` / `audio.playSfx('slot')` where you want it (`import { audio } from '../audio/audioManager.js'`).
 - Audio can't be checked by the automated tests; listen for it by hand on desktop and a phone.
 
+Replacing sounds is explained step by step in **AUDIO-HOWTO.md** (`npm run audio:list`, `npm run audio:set`). Since 0.6.0 the game tries `.mp3` first, so one mp3 per sound is enough, and the five new places have their own music files.
+
 ## Added in 0.5.0
 Music: `horse-loop` (slot `MUSIC.horse`), `basket-loop` (`MUSIC.basket`). Effects: `throw-spear` (`SFX.throwSpear`), `soldier-down` (`SFX.soldierDown`), `bad-catch` (`SFX.badCatch`), `game-over` (`SFX.gameOver`). Wisdom Catch reuses `collect` for knowledge. Generated like the rest; replace by same-name files.
 

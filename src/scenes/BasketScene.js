@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeIn } from '../ui/fx.js';
 import { CONFIG } from '../config.js';
 import { COLORS } from '../ui/theme.js';
 import { makeButton, minTarget } from '../ui/button.js';
@@ -27,6 +28,7 @@ export class BasketScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.setBackgroundColor(COLORS.background);
+    fadeIn(this, 300);
     this.state = 'ready'; // 'ready' | 'running' | 'lost' | 'won'
     this.attempts = 0;
     this.leaving = false;

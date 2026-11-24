@@ -1,3 +1,4 @@
+import '@fontsource/marcellus/latin-400.css';
 import Phaser from 'phaser';
 import { CONFIG } from './config.js';
 import { BootScene } from './scenes/BootScene.js';

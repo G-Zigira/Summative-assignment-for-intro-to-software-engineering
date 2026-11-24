@@ -1,4 +1,5 @@
 import { CONFIG } from '../config.js';
+import { bake } from './fx.js';
 import { COLORS } from './theme.js';
 import { makeButton, makeText } from './button.js';
 import { audio } from '../audio/audioManager.js';
@@ -54,12 +55,28 @@ export class DialogueUI {
 
   #panel(height, borderColor) {
     const top = CONFIG.GAME_HEIGHT - MARGIN - height;
+    const cx = CONFIG.GAME_WIDTH / 2;
+    // Clicks on the panel must not reach the world underneath: an invisible rectangle catches them.
     const bg = this.scene.add
-      .rectangle(CONFIG.GAME_WIDTH / 2, top + height / 2, PANEL_W, height, COLORS.panel, 0.97)
-      .setStrokeStyle(3, borderColor)
+      .rectangle(cx, top + height / 2, PANEL_W, height, COLORS.panel, 0.001)
       .setDepth(20)
-      .setInteractive(); // swallows clicks so they do not reach the world underneath
+      .setInteractive();
     this.items.push(bg);
+    // The picture of the panel (baked once per size): rounded, soft shadow, inner line, corner ornaments.
+    const PAD2 = 8;
+    const key = bake(this.scene, `panel-${PANEL_W}x${Math.round(height)}-${borderColor}`, PANEL_W + PAD2 * 2, height + PAD2 * 2, (g) => {
+      const x0 = PAD2, y0 = PAD2;
+      g.fillStyle(0x000000, 0.4).fillRoundedRect(x0 + 2, y0 + 6, PANEL_W, height, 18);
+      g.fillStyle(COLORS.panel, 0.97).fillRoundedRect(x0, y0, PANEL_W, height, 18);
+      g.fillStyle(0xffffff, 0.05).fillRoundedRect(x0 + 3, y0 + 3, PANEL_W - 6, 26, { tl: 15, tr: 15, bl: 0, br: 0 });
+      g.lineStyle(3, borderColor, 1).strokeRoundedRect(x0, y0, PANEL_W, height, 18);
+      g.lineStyle(1, borderColor, 0.35).strokeRoundedRect(x0 + 7, y0 + 7, PANEL_W - 14, height - 14, 12);
+      g.fillStyle(borderColor, 1);
+      for (const [px, py] of [[x0 + 22, y0], [x0 + PANEL_W - 22, y0], [x0 + 22, y0 + height], [x0 + PANEL_W - 22, y0 + height]]) {
+        g.fillTriangle(px - 7, py, px, py - 7, px + 7, py).fillTriangle(px - 7, py, px, py + 7, px + 7, py);
+      }
+    });
+    this.items.push(this.scene.add.image(cx, top + height / 2, key).setDepth(20));
     return top;
   }
 

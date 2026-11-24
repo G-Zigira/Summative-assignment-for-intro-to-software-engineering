@@ -17,7 +17,7 @@ test.describe('desktop', () => {
     await startNewGameAndTrail1(page);
     const x0 = await page.evaluate(() => window.__game.scene.getScene('GameScene').player.x);
     await page.keyboard.down('ArrowRight');
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(900); // long enough even when the test machine draws slowly (no GPU)
     await page.keyboard.up('ArrowRight');
     await page.waitForTimeout(150);
     const x1 = await page.evaluate(() => window.__game.scene.getScene('GameScene').player.x);

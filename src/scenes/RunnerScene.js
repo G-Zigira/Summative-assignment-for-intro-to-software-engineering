@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeIn } from '../ui/fx.js';
 import { CONFIG } from '../config.js';
 import { COLORS } from '../ui/theme.js';
 import { makeButton, makeText, minTarget } from '../ui/button.js';
@@ -8,6 +9,7 @@ import { propKey, spriteKey, hasTexture } from '../assets/manifest.js';
 import { audio } from '../audio/audioManager.js';
 import { createRun, step, jump, scoreOf, onGround } from '../systems/runner.js';
 import { saveBest, bests } from '../ui/miniGameKit.js';
+import { RUNNER_THEMES, themeNameForArea, themeNames, obstacleProp } from '../assets/runnerThemes.js';
 
 // Travel minigame, shown when the story moves to a new area. The player runs and jumps over
 // rocks, bushes and trees (like the Chrome dinosaur game). Reaching the target score arrives
@@ -34,7 +36,11 @@ export class RunnerScene extends Phaser.Scene {
     const { trailId, sceneId } = this.nextData;
     const trail = getTrail(trailId);
     const next = trail?.scenes.find((s) => s.id === sceneId);
+    // The look depends on where you are going (a new one every run in the Mini Games menu).
+    this.themeName = this.arcade ? themeNames()[Math.floor(Math.random() * themeNames().length)] : themeNameForArea(next?.area);
+    this.theme = RUNNER_THEMES[this.themeName];
     this.cameras.main.setBackgroundColor(COLORS.background);
+    fadeIn(this, 300);
     this.attempts = 0;
     this.state = 'ready'; // 'ready' | 'running' | 'crashed' | 'won'
     this.run = this.#newRun();
@@ -44,11 +50,13 @@ export class RunnerScene extends Phaser.Scene {
     this.leaving = false; // scene objects are reused by Phaser, so reset every field here
 
     // --- Scenery ---------------------------------------------------------------
-    if (hasTexture(this, 'runner-sky')) {
-      this.sky = this.add.tileSprite(0, 0, W, H, 'runner-sky').setOrigin(0).setTileScale(0.5).setDepth(-10);
+    const skyKey = hasTexture(this, this.theme.sky) ? this.theme.sky : 'runner-sky';
+    const groundKey = hasTexture(this, this.theme.ground) ? this.theme.ground : 'runner-ground';
+    if (hasTexture(this, skyKey)) {
+      this.sky = this.add.tileSprite(0, 0, W, H, skyKey).setOrigin(0).setTileScale(0.5).setDepth(-10);
     } else this.add.rectangle(W / 2, H / 2, W, H, 0x4a2a52).setDepth(-10);
-    if (hasTexture(this, 'runner-ground')) {
-      this.ground = this.add.tileSprite(0, H - 100, W, 100, 'runner-ground').setOrigin(0).setTileScale(0.5).setDepth(-5);
+    if (hasTexture(this, groundKey)) {
+      this.ground = this.add.tileSprite(0, H - 100, W, 100, groundKey).setOrigin(0).setTileScale(0.5).setDepth(-5);
     } else this.add.rectangle(W / 2, H - 50, W, 100, 0x9a6a3c).setDepth(-5);
 
     // --- Runner ----------------------------------------------------------------
@@ -179,9 +187,12 @@ export class RunnerScene extends Phaser.Scene {
     for (const o of run.obstacles) {
       let view = this.obstacleViews.find((v) => v.obstacle === o);
       if (!view) {
-        const key = propKey(o.prop);
+        const look = obstacleProp(this.themeName, o.kind);
+        const themedKey = propKey(look.prop);
+        const key = hasTexture(this, themedKey) ? themedKey : propKey(o.prop);
+        const scale = key === themedKey ? look.scale : o.scale;
         view = hasTexture(this, key)
-          ? this.add.image(0, R.GROUND_Y + 4, key).setOrigin(0.5, 1).setScale(o.scale).setDepth(1)
+          ? this.add.image(0, R.GROUND_Y + 4, key).setOrigin(0.5, 1).setScale(scale).setDepth(1)
           : this.add.rectangle(0, R.GROUND_Y - o.h / 2, o.w, o.h, 0x5a4a3a).setDepth(1);
         view.obstacle = o;
         this.obstacleViews.push(view);

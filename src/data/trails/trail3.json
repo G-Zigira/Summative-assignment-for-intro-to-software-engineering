@@ -134,7 +134,7 @@
     {
       "id": "t3-s2",
       "title": "Collecting Knowledge",
-      "area": "wall-garden",
+      "area": "farm-village",
       "nextScene": "t3-s3",
       "playerStart": {
         "x": 120,
@@ -364,7 +364,7 @@
     {
       "id": "t3-s4",
       "title": "Wisdom for Everyone",
-      "area": "courtyard",
+      "area": "village-square",
       "final": true,
       "finale": "basket",
       "playerStart": {
@@ -384,9 +384,9 @@
           "y": 505
         },
         {
-          "key": "baobab",
-          "x": 700,
-          "y": 200
+          "key": "pots",
+          "x": 430,
+          "y": 215
         }
       ],
       "items": [

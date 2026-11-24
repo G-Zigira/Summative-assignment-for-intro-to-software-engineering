@@ -1,4 +1,6 @@
 # Trails (v0.4.0)
+Places (every scene of the two story trails has its own picture): Lion's Path = Kangaba hall, the forge, the exile plains, Kirina. Web of Wisdom = the forest, the farm village, the big tree, the village square. The tutorial keeps the courtyard, wall garden and road.
+
 1. **Tutorial: Trail 1** teaches walking, talking to the Elder, choices and story pieces.
 2. **The Lion's Path** (Sundiata): Kangaba courtyard -> wall garden -> road -> Kirina. Elder: Jeli Balla (griot).
 3. **The Web of Wisdom** (Anansi): forest -> wall garden -> big tree -> courtyard. Elders: Nana Yaa, Anansi, Ntikuma.
