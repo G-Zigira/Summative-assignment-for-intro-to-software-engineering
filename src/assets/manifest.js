@@ -6,7 +6,9 @@ export const ASSET_SCALE = 0.5; // pictures are drawn at 2x and shown at half si
 
 export const BACKGROUNDS = ['title', 'courtyard', 'wall-garden', 'road', 'forest', 'kirina', 'big-tree', 'placeholder'];
 export const PROPS = ['baobab', 'stall', 'pots', 'drum', 'carved-door', 'bush', 'rock', 'signpost', 'rug',
-  'kora', 'iron-rod', 'anvil', 'tent', 'spears', 'wisdom-pot', 'web', 'fern', 'forest-tree', 'basket', 'calabash', 'campfire', 'cowrie', 'mortar'];
+  'kora', 'iron-rod', 'anvil', 'tent', 'spears', 'wisdom-pot', 'web', 'fern', 'forest-tree', 'basket', 'calabash', 'campfire', 'cowrie', 'mortar',
+  'horse-a', 'horse-b', 'horse-jump', 'soldier-a', 'soldier-b', 'spear',
+  'know-scroll', 'know-adinkra', 'know-light', 'bad-thorn', 'bad-stone', 'bad-vial'];
 export const SPRITES = ['player', 'elder', 'guide', 'griot', 'child', 'anansi']; // 4 x 4 sheets of 96 x 128 frames: rows = down, left, right, up
 export const SPRITE_FRAME = { w: 96, h: 128 };
 export const DIRECTIONS = ['down', 'left', 'right', 'up'];
@@ -23,6 +25,7 @@ export function loadAll(scene) {
   SPRITES.forEach((n) =>
     scene.load.spritesheet(spriteKey(n), `sprites/${n}.png`, { frameWidth: SPRITE_FRAME.w, frameHeight: SPRITE_FRAME.h }));
   scene.load.image('runner-sky', 'backgrounds/runner-sky.jpg');
+  scene.load.image('battle-sky', 'backgrounds/battle-sky.jpg');
   scene.load.image('runner-ground', 'backgrounds/runner-ground.png');
   scene.load.image('emblem', 'ui/emblem.png');
   scene.load.setPath('');

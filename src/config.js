@@ -42,6 +42,52 @@ export const CONFIG = Object.freeze({
     EXTRA_GAP_AIRTIME: 0.9,
   },
 
+  // --- Horse Charge: the Sundiata battle minigame (docs/MINIGAMES.md) ------------
+  HORSE: {
+    TARGET_KILLS: 8,       // story mode: defeat this many soldiers to win
+    START_SPEED: 300,      // px per second
+    MAX_SPEED: 480,
+    ACCEL: 6,
+    GRAVITY: 2400,
+    JUMP_VELOCITY: 900,    // peak about 169 px (soldiers are taller: they cannot be jumped)
+    GROUND_Y: 450,
+    PLAYER_X: 170,
+    SPEAR_SPEED: 1100,     // px per second (in the world, so faster than the horse)
+    SPEAR_COOLDOWN: 0.4,   // seconds between throws
+    SPEAR_HEIGHT: 62,      // how far above the horse's feet the spear leaves the rider's hand
+    SOLDIER_SPEED: 70,     // soldiers walk towards the rider
+    MIN_GAP: 1.35,         // seconds between things to deal with (always enough time to react)
+    EXTRA_GAP: 1.0,
+    KILL_POINTS: 10,       // arcade score per soldier
+    PX_PER_POINT: 50,      // arcade score per distance ridden
+  },
+
+  // --- Wisdom Catch: the Anansi basket minigame ------------------------------------
+  BASKET: {
+    GOAL: 15,              // story mode: reach this many shells to win
+    START_STORY: 3,
+    START_ARCADE: 5,
+    GOOD_SHELLS: 1,        // knowledge caught: +1 shell
+    BAD_SHELLS: -3,        // something bad caught: -3 shells (below 0 = you lose)
+    WIDTH: 120,            // basket width
+    SPEED: 580,            // px per second with the keys / buttons
+    POINTER_SPEED: 1100,   // px per second when following a finger or mouse
+    RIM_Y: 452,            // where the top of the basket is
+    ITEM_R: 22,
+    FALL_START: 190,
+    FALL_MAX: 360,
+    FALL_ACCEL: 3.5,       // px/s gained per second
+    SPAWN_START: 0.95,     // seconds between falling things at the start...
+    SPAWN_MIN: 0.5,        // ...and at the fastest
+    SPAWN_DECAY: 0.008,    // seconds shaved off per second played
+    BAD_START: 0.28,       // share of falling things that are bad...
+    BAD_MAX: 0.42,         // ...rising to this
+    MAX_SHIFT: 380,        // a new item appears at most this far sideways from the last (always reachable)
+  },
+
+  // Best scores of the arcade menu live in their OWN storage key: the save file keeps exactly the fields in the SRS.
+  ARCADE_KEY: 'sankofa-trails/arcade',
+
   // --- Saving (FR 3.2, FR 3.5) --------------------------------------------
   SAVE_KEY: 'sankofa-trails/save',
   SAVE_VERSION: 1,

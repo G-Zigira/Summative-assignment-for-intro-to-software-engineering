@@ -26,5 +26,8 @@ Add the drawing and register it (`PROPS`, `STYLES`, `BACKGROUNDS`), add its name
 
 If a picture file is missing the game still runs and shows plain shapes instead.
 
+## Added in 0.5.0
+`art-src/battle.mjs`: props `horse-a`, `horse-b`, `horse-jump` (gallop frames), `soldier-a`, `soldier-b`, `spear`, `know-scroll`, `know-adinkra`, `know-light`, `bad-thorn`, `bad-stone`, `bad-vial`; background `battle-sky`. Build only these with `node art-src/build-art.mjs horse` (the argument filters by name) so pictures you replaced are not overwritten.
+
 ## Added in 0.4.0
 Sprites: `griot`, `child`, `anansi`. Props: kora, iron-rod, anvil, tent, spears, wisdom-pot, web, fern, forest-tree, basket, calabash, campfire, cowrie, mortar. Backgrounds: forest, kirina, big-tree. Drawn in `art-src/more.mjs` and `characters.mjs`; registered in `build-art.mjs` and `src/assets/manifest.js`. All are placeholders in the same original style; replace by keeping file name and size.

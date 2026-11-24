@@ -132,6 +132,8 @@ export function validateTrail(trail, codexIds = new Set()) {
       for (const id of it.unlocksCodex ?? []) if (!codexIds.has(id)) err(`${w}: unlocks unknown codex entry "${id}"`);
     }
     if (scene.travel !== undefined && typeof scene.travel !== 'boolean') err(`${sc}: travel must be true or false`);
+    if (scene.finale !== undefined && !['horse', 'basket'].includes(scene.finale)) err(`${sc}: finale must be "horse" or "basket"`);
+    if (scene.finale !== undefined && !scene.final) err(`${sc}: finale only works on the last scene of a trail`);
     if (scene.playerStart && scene.playerStart.y < 170) warn(`${sc}: playerStart is on the back wall (y < 170)`);
     if (npc && npc.y < 190) warn(`${sc}: the npc is on the back wall (y < 190)`);
 

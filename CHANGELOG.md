@@ -5,6 +5,20 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-24
+
+### Added
+- **Mini Games** menu on the title screen: play Savanna Run, Horse Charge or Wisdom Catch endlessly until you fail or quit. Best scores are kept on the device (separate storage key, not in the save file)
+- **Horse Charge** (Sundiata's battle): a rider gallops, the action buttons jump and throw spears at soldiers; a soldier you do not stop, or an obstacle you do not jump, ends the run. It is now the finale of The Lion's Path
+- **Wisdom Catch** (Anansi): move a basket to catch falling knowledge (+1 shell) and dodge bad things (-3 shells). It is now the finale of The Web of Wisdom
+- Trail scenes can set `"finale": "horse"` or `"basket"` on the final scene; skipping is always possible
+- New art (rider, soldiers, spear, battle sky, 3 knowledge and 3 bad items), new music (`horse-loop`, `basket-loop`) and effects (`throw-spear`, `soldier-down`, `bad-catch`, `game-over`)
+- Unit tests for both minigames (bots must win 23/25 and 22/25 random rounds) and the best-score store; browser tests for the menu and both games
+
+### Changed
+- Title menu: Mini Games button added below Settings
+- The runner has an endless arcade mode (no target, Quit instead of Skip, game over with best score)
+
 ## [0.4.0] - 2026-11-24
 
 ### Added

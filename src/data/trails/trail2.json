@@ -405,6 +405,7 @@
       "title": "The Battle of Kirina",
       "area": "kirina",
       "final": true,
+      "finale": "horse",
       "playerStart": {
         "x": 120,
         "y": 230

@@ -53,12 +53,22 @@ export async function talkThroughScene(page) {
       return {
         trailSelect: g.scene.isActive('TrailSelectScene'),
         runner: g.scene.isActive('RunnerScene'),
+        finale: g.scene.isActive('HorseScene') || g.scene.isActive('BasketScene'),
         story: s.story?.id,
         open: s.dialogueOpen,
         options: s.ui?.optionIds?.length ?? 0,
       };
     });
     if (info.trailSelect) return 'trail-complete';
+    if (info.finale) { // a trail's last scene ends with a minigame (horse / basket): win it instantly
+      await page.evaluate(() => {
+        const g = window.__game;
+        (g.scene.isActive('HorseScene') ? g.scene.getScene('HorseScene') : g.scene.getScene('BasketScene')).debugWin();
+      });
+      await waitForScene(page, 'GameScene');
+      await page.waitForTimeout(300);
+      continue;
+    }
     if (info.runner) { // the travel minigame between areas: skip it (it has its own tests)
       await page.evaluate(() => window.__game.scene.getScene('RunnerScene').skip());
       await waitForScene(page, 'GameScene');

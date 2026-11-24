@@ -7,6 +7,7 @@ import { getTrail } from '../content/index.js';
 import { propKey, spriteKey, hasTexture } from '../assets/manifest.js';
 import { audio } from '../audio/audioManager.js';
 import { createRun, step, jump, scoreOf, onGround } from '../systems/runner.js';
+import { saveBest, bests } from '../ui/miniGameKit.js';
 
 // Travel minigame, shown when the story moves to a new area. The player runs and jumps over
 // rocks, bushes and trees (like the Chrome dinosaur game). Reaching the target score arrives
@@ -26,6 +27,7 @@ export class RunnerScene extends Phaser.Scene {
 
   init(data) {
     this.nextData = data ?? {};
+    this.arcade = this.nextData.mode === 'arcade'; // endless, started from the Mini Games menu
   }
 
   create() {
@@ -35,7 +37,7 @@ export class RunnerScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(COLORS.background);
     this.attempts = 0;
     this.state = 'ready'; // 'ready' | 'running' | 'crashed' | 'won'
-    this.run = createRun(Math.floor(Math.random() * 1e9));
+    this.run = this.#newRun();
     this.obstacleViews = [];
     this.pickupViews = [];
     this.lockUntil = 0;
@@ -61,12 +63,12 @@ export class RunnerScene extends Phaser.Scene {
     const label = (t, x, y, size, style = {}) => makeText(this, x, y, t, size, {
       backgroundColor: '#1f1a16cc', padding: { x: 8, y: 4 }, ...style,
     }).setDepth(10);
-    this.scoreText = label('Score 0 / ' + R.TARGET_SCORE, 16, 12, 18);
-    label(next ? `Travelling to: ${next.title}` : 'Travelling...', 16, 54, 16, { color: COLORS.accentText });
-    this.barBg = this.add.rectangle(W / 2, 20, 240, 12, 0x000000, 0.6).setStrokeStyle(2, COLORS.border).setDepth(10);
-    this.bar = this.add.rectangle(W / 2 - 118, 20, 4, 8, COLORS.accent).setOrigin(0, 0.5).setDepth(11);
+    this.scoreText = label(this.arcade ? 'Score 0' : 'Score 0 / ' + R.TARGET_SCORE, 16, 12, 18);
+    label(this.arcade ? 'Savanna Run' : (next ? `Travelling to: ${next.title}` : 'Travelling...'), 16, 54, 16, { color: COLORS.accentText });
+    this.barBg = this.add.rectangle(W / 2, 20, 240, 12, 0x000000, 0.6).setStrokeStyle(2, COLORS.border).setDepth(10).setVisible(!this.arcade);
+    this.bar = this.add.rectangle(W / 2 - 118, 20, 4, 8, COLORS.accent).setOrigin(0, 0.5).setDepth(11).setVisible(!this.arcade);
 
-    this.skipButton = makeButton(this, { width: 130, height: 48, label: 'Skip', fontSize: 18, depth: 12, onClick: () => this.#arrive(false) });
+    this.skipButton = makeButton(this, { width: 130, height: 48, label: this.arcade ? 'Quit' : 'Skip', fontSize: 18, depth: 12, onClick: () => this.#arrive(false) });
     this.skipButton.setPosition(W - 16 - this.skipButton.width / 2, 16 + this.skipButton.height / 2);
 
     const touch = controlScheme() === 'touch';
@@ -74,6 +76,7 @@ export class RunnerScene extends Phaser.Scene {
       fontStyle: 'bold', align: 'center', color: COLORS.text, backgroundColor: '#1f1a16dd', padding: { x: 16, y: 10 },
     }).setOrigin(0.5).setDepth(15);
     this.cowrieText = label('Cowries 0', 16, 96, 16, { color: COLORS.accentText });
+    this.bestText = this.arcade ? label(`Best ${bests().runner}`, 16, 138, 16, { color: COLORS.accentText }) : null;
     this.#say(touch
       ? 'Tap to jump. Tap again in the air to double jump!\nTap to start.'
       : 'Space (or E) jumps. Press again in the air\nto double jump over tall trees!\nPress it to start.');
@@ -118,7 +121,7 @@ export class RunnerScene extends Phaser.Scene {
   }
 
   #retry() {
-    this.run = createRun(Math.floor(Math.random() * 1e9));
+    this.run = this.#newRun();
     this.obstacleViews.forEach((v) => v.destroy());
     this.obstacleViews = [];
     this.pickupViews.forEach((v) => v.destroy());
@@ -126,6 +129,11 @@ export class RunnerScene extends Phaser.Scene {
     this.state = 'running';
     this.message.setVisible(false);
     this.player.clearTint?.();
+  }
+
+  #newRun() {
+    const seed = Math.floor(Math.random() * 1e9);
+    return this.arcade ? createRun(seed, { ...R, TARGET_SCORE: Infinity }) : createRun(seed);
   }
 
   #say(text) {
@@ -206,6 +214,7 @@ export class RunnerScene extends Phaser.Scene {
 
     // HUD
     this.cowrieText.setText(`Cowries ${run.cowries}`);
+    if (this.arcade) { this.scoreText.setText(`Score ${scoreOf(run)}`); return; }
     const score = Math.min(scoreOf(run), R.TARGET_SCORE);
     this.scoreText.setText(`Score ${score} / ${R.TARGET_SCORE}`);
     this.bar.width = Math.max(4, 236 * (score / R.TARGET_SCORE));
@@ -219,6 +228,14 @@ export class RunnerScene extends Phaser.Scene {
     this.player.setTint?.(0xff8a7a);
     this.player.anims?.stop();
     this.lockUntil = this.time.now + 350; // so a late key press does not skip the message
+    if (this.arcade) {
+      const score = scoreOf(this.run);
+      const { best, isNew } = saveBest('runner', score);
+      this.bestText?.setText(`Best ${best}`);
+      audio.playSfx('gameOver');
+      this.#say(`Game over!  Score ${score}${isNew ? '  (new best!)' : ''}\nPress jump to run again, or Quit.`);
+      return;
+    }
     const hint = this.attempts >= 2 ? '\nOr press Skip to go on.' : '';
     this.#say(`You tripped!\nPress jump to try again.${hint}`);
   }
@@ -235,7 +252,7 @@ export class RunnerScene extends Phaser.Scene {
   }
 
   #go() {
-    this.scene.start('GameScene', this.nextData);
+    this.scene.start(this.arcade ? 'ArcadeScene' : 'GameScene', this.nextData);
   }
 
   /** Same as pressing Skip. */
