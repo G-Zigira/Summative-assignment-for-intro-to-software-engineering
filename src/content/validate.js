@@ -65,6 +65,7 @@ export function validateTrail(trail, codexIds = new Set()) {
   // Scenes
   const sceneIds = new Set();
   const nodeIds = new Set(); // unique across the trail: save data stores decision ids
+  const itemIds = new Set(); // story-piece ids are unique across the trail (the save stores them)
   for (const scene of trail.scenes) {
     if (sceneIds.has(scene.id)) err(`duplicate scene id "${scene.id}"`);
     sceneIds.add(scene.id);
@@ -106,6 +107,29 @@ export function validateTrail(trail, codexIds = new Set()) {
     }
     for (const ob of scene.obstacles ?? []) {
       if (ob.prop && !PROP_NAMES.includes(ob.prop)) err(`${sc}: obstacle prop "${ob.prop}" is unknown`);
+    }
+    // Story pieces (items the player touches): short notes that add to the story.
+    const items = scene.items ?? [];
+    if (items.length > CONFIG.MAX_ITEMS_PER_SCENE) err(`${sc}: ${items.length} items (max ${CONFIG.MAX_ITEMS_PER_SCENE})`);
+    for (const it of items) {
+      const w = `${sc} item "${it.id}"`;
+      if (!it.id) { err(`${sc}: an item has no id`); continue; }
+      if (itemIds.has(it.id)) err(`${w}: duplicate item id`);
+      itemIds.add(it.id);
+      if (!PROP_NAMES.includes(it.prop)) err(`${w}: unknown prop "${it.prop}"`);
+      if (!it.title) err(`${w}: missing title`);
+      if (!it.text) err(`${w}: missing text`);
+      if (wordCount(it.text) > CONFIG.MAX_ITEM_WORDS) err(`${w}: ${wordCount(it.text)} words (max ${CONFIG.MAX_ITEM_WORDS})`);
+      if (!Number.isFinite(it.x) || !Number.isFinite(it.y)) err(`${w}: needs numeric x and y`);
+      else {
+        if (it.y < 190) warn(`${w}: is on the back wall (y < 190)`);
+        if (inTouchZone({ x: it.x, y: it.y })) warn(`${w}: is under the on-screen touch controls`);
+        if (npc && Math.hypot(it.x - npc.x, it.y - 24 - npc.y) < 80) warn(`${w}: is too close to the npc (the prompt would be ambiguous)`);
+        for (const other of items) {
+          if (other !== it && Number.isFinite(other.x) && Math.hypot(it.x - other.x, it.y - other.y) < 80) warn(`${w}: is too close to item "${other.id}"`);
+        }
+      }
+      for (const id of it.unlocksCodex ?? []) if (!codexIds.has(id)) err(`${w}: unlocks unknown codex entry "${id}"`);
     }
     if (scene.travel !== undefined && typeof scene.travel !== 'boolean') err(`${sc}: travel must be true or false`);
     if (scene.playerStart && scene.playerStart.y < 170) warn(`${sc}: playerStart is on the back wall (y < 170)`);

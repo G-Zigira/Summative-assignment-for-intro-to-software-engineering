@@ -21,6 +21,21 @@ export const STYLES = {
     skin: C.skinGuide, hair: C.hairDark, hairStyle: 'wrap', top: '#6b4a8a', accent: C.gold,
     bottom: '#3d2d52', shoe: '#2a1c14', robe: false, extra: 'none', wrap: C.teal,
   },
+  // A jeli (griot): keeper of history, in an indigo robe and a gold head wrap.
+  griot: {
+    skin: '#7a4a30', hair: C.hairDark, hairStyle: 'wrap', top: '#2c4a8a', accent: C.gold,
+    bottom: '#1f3463', shoe: '#2a1c14', robe: true, extra: 'none', wrap: '#e0a030',
+  },
+  // A child, drawn smaller (scale).
+  child: {
+    skin: '#8d5a3b', hair: C.hairDark, hairStyle: 'short', top: '#c4572f', accent: C.cream,
+    bottom: '#3a2d22', shoe: '#2a1c14', robe: false, extra: 'none', scale: 0.78,
+  },
+  // Anansi, the clever one: black and gold with a rust head wrap.
+  anansi: {
+    skin: '#5b3622', hair: C.hairDark, hairStyle: 'wrap', top: '#262626', accent: C.gold,
+    bottom: '#3a2d22', shoe: '#2a1c14', robe: false, extra: 'none', wrap: '#b5542f',
+  },
 };
 
 const shade = (hex, amt) => {
@@ -126,6 +141,7 @@ export function characterSheet(name) {
       if (dir === 'down' || dir === 'up') g = frontOrBack(s, dir, f);
       else if (dir === 'right') g = side(s, f);
       else g = `<g transform="translate(${FRAME_W} 0) scale(-1 1)">${side(s, f)}</g>`;
+      if (s.scale) g = `<g transform="translate(48 117) scale(${s.scale}) translate(-48 -117)">${g}</g>`;
       inner += `<g transform="translate(${f * FRAME_W} ${r * FRAME_H})">${g}</g>`;
     }
   });

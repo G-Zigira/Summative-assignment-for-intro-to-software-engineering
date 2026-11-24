@@ -1,6 +1,6 @@
 {
   "name": "sankofa-trails",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Sankofa Trails: a 2D browser game that explores African history and culture.",
   "type": "module",
@@ -17,7 +17,8 @@
     "validate:content:release": "node scripts/validate-content.js --release",
     "e2e": "playwright test",
     "check": "npm run validate:content && npm test && npm run build",
-    "art": "node art-src/build-art.mjs"
+    "art": "node art-src/build-art.mjs",
+    "audio": "python3 audio-src/make_audio.py"
   },
   "dependencies": {
     "phaser": "^3.90.0"

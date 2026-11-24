@@ -2,7 +2,7 @@
   "id": "trail1",
   "order": 1,
   "title": "The Bird Looks Back",
-  "summary": "SAMPLE trail used to build and test the engine. Replace with researched content.",
+  "summary": "Tutorial: learn to move, talk, find story pieces, open the Codex and run between places. Sample content.",
   "review": {
     "status": "sample",
     "reviewer": null,
@@ -34,8 +34,15 @@
           "prop": "stall"
         }
       ],
-      "startNode": "t1-s1-n1",
+      "startNode": "t1-s1-n0",
       "nodes": [
+        {
+          "id": "t1-s1-n0",
+          "type": "line",
+          "speaker": "Narrator",
+          "text": "Welcome to Sankofa Trails! Move with the arrow keys or WASD (on a phone, use the pad). Glowing stars mark objects: walk up and press E (or tap Talk) to read a story piece. Then talk to the Elder the same way.",
+          "next": "t1-s1-n1"
+        },
         {
           "id": "t1-s1-n1",
           "type": "line",
@@ -86,7 +93,7 @@
           "id": "t1-s1-n3",
           "type": "line",
           "speaker": "Elder",
-          "text": "Keep that in mind as we walk on.",
+          "text": "Keep that in mind as we walk on. The road to the next place must be run: press Space to jump, and press again in the air to double jump over tall trees.",
           "next": null
         }
       ],
@@ -102,11 +109,6 @@
           "y": 200
         },
         {
-          "key": "pots",
-          "x": 170,
-          "y": 250
-        },
-        {
           "key": "rug",
           "x": 330,
           "y": 470
@@ -115,6 +117,29 @@
           "key": "bush",
           "x": 110,
           "y": 505
+        },
+        {
+          "key": "bush",
+          "x": 860,
+          "y": 330
+        }
+      ],
+      "items": [
+        {
+          "id": "t1-i1",
+          "prop": "pots",
+          "x": 170,
+          "y": 250,
+          "title": "Clay pots",
+          "text": "Clay pots like these have been made in West Africa for thousands of years to carry water and store grain. Many are decorated with patterns."
+        },
+        {
+          "id": "t1-i2",
+          "prop": "drum",
+          "x": 520,
+          "y": 440,
+          "title": "A drum",
+          "text": "Drums are used across West Africa for music, dance and ceremony. Some can even imitate the rise and fall of speech, to send messages far away."
         }
       ]
     },
@@ -133,8 +158,15 @@
         "y": 400,
         "sprite": "elder"
       },
-      "startNode": "t1-s2-n1",
+      "startNode": "t1-s2-n0",
       "nodes": [
+        {
+          "id": "t1-s2-n0",
+          "type": "line",
+          "speaker": "Narrator",
+          "text": "Tip: open the Menu (or press Esc) and choose Codex to read the entries you have unlocked. A new entry appears each time you learn something important.",
+          "next": "t1-s2-n1"
+        },
         {
           "id": "t1-s2-n1",
           "type": "line",
@@ -191,9 +223,27 @@
           "y": 520
         },
         {
-          "key": "drum",
-          "x": 860,
-          "y": 280
+          "key": "fern",
+          "x": 700,
+          "y": 520
+        }
+      ],
+      "items": [
+        {
+          "id": "t1-i3",
+          "prop": "basket",
+          "x": 350,
+          "y": 340,
+          "title": "Grain basket",
+          "text": "Woven baskets are made from grasses and palm fibres in many African communities. They are used to carry, store and sort food."
+        },
+        {
+          "id": "t1-i4",
+          "prop": "mortar",
+          "x": 600,
+          "y": 250,
+          "title": "Mortar and pestle",
+          "text": "Pounding grain in a wooden mortar with a pestle is an everyday task in many places in Africa. The pestle can be as tall as a person."
         }
       ]
     },
@@ -241,11 +291,6 @@
       ],
       "props": [
         {
-          "key": "signpost",
-          "x": 330,
-          "y": 260
-        },
-        {
           "key": "baobab",
           "x": 600,
           "y": 190
@@ -255,7 +300,26 @@
           "x": 200,
           "y": 480
         }
+      ],
+      "items": [
+        {
+          "id": "t1-i5",
+          "prop": "signpost",
+          "x": 330,
+          "y": 270,
+          "title": "The signpost",
+          "text": "A signpost shows where you have been and where you are going. Sankofa asks us to look back as well as forward."
+        },
+        {
+          "id": "t1-i6",
+          "prop": "campfire",
+          "x": 420,
+          "y": 440,
+          "title": "Campfire",
+          "text": "In many communities, evening fires are a place for stories. Elders tell tales and histories to the young around the flames."
+        }
       ]
     }
-  ]
+  ],
+  "tutorial": true
 }

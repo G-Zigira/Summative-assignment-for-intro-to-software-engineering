@@ -9,11 +9,14 @@ When the story moves to a **new area** (for example courtyard -> wall garden), t
 | Mouse | Click anywhere |
 | Touch | Tap anywhere, or the Jump button (bottom right, where Talk is) |
 
+**Double jump:** press the action button again while in the air for a second, slightly lower jump (`MAX_JUMPS 2`). Tall trees need it. **Cowries:** shells floating over obstacles give +5 points each.
+
 The first press starts the run. After tripping, the same press tries again. **Skip** (top right) always works, so nobody is stuck: the game is for fun, not a gate.
 
 ## Rules (all numbers in `src/config.js` -> `RUNNER`)
 - Score = distance run / 25 px. Target 250 points, about 15 seconds.
 - Speed rises from 320 to 620 px/s. Tall trees only appear after the first few seconds.
+- Jumps: 2 per leap (`MAX_JUMPS`, `AIR_JUMP_VELOCITY`). Cowrie pickups: `COWRIE_POINTS`.
 - Obstacles are spaced so a jump always clears them with time to land (checked by tests with a bot over 25 random runs).
 - Tripping restarts the score; there is no limit on tries. After 2 trips a hint points to Skip.
 

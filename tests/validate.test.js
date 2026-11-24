@@ -62,7 +62,7 @@ describe('validateTrail catches content mistakes', () => {
 
   it('story loop that could trap the player', () => {
     const t = trail1();
-    t.scenes[0].nodes[0].next = 't1-s1-n1';
+    t.scenes[0].nodes[1].next = 't1-s1-n0';
     expect(hasError(validateTrail(t, codexIds), 'loops back')).toBe(true);
   });
 

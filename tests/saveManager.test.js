@@ -17,7 +17,7 @@ describe('save data (FR 3.2.2)', () => {
     const save = createNewSave({ firstTrailId: 'trail1', now: fixedNow });
     expect(Object.keys(save).sort()).toEqual(
       ['version', 'savedAt', 'trailId', 'sceneId', 'areaId', 'position', 'unlockedTrails',
-        'completedTrails', 'unlockedCodex', 'choices', 'settings'].sort(),
+        'completedTrails', 'unlockedCodex', 'choices', 'fragments', 'settings'].sort(),
     );
     expect(save.unlockedTrails).toEqual(['trail1']); // FR 3.3: only Trail 1 on a new game
     expect(save.version).toBe(CONFIG.SAVE_VERSION);

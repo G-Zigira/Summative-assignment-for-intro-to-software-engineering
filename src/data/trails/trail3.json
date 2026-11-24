@@ -1,0 +1,475 @@
+{
+  "id": "trail3",
+  "order": 3,
+  "title": "The Web of Wisdom",
+  "summary": "Help Anansi the spider learn why wisdom cannot be kept in one pot. Draft story: needs fact-checking.",
+  "review": {
+    "status": "sample",
+    "reviewer": null,
+    "date": null
+  },
+  "startScene": "t3-s1",
+  "scenes": [
+    {
+      "id": "t3-s1",
+      "title": "The Pot of Wisdom",
+      "area": "forest",
+      "nextScene": "t3-s2",
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Nana Yaa",
+        "x": 700,
+        "y": 300,
+        "sprite": "elder"
+      },
+      "props": [
+        {
+          "key": "fern",
+          "x": 170,
+          "y": 260
+        },
+        {
+          "key": "fern",
+          "x": 860,
+          "y": 500
+        },
+        {
+          "key": "fern",
+          "x": 420,
+          "y": 300
+        }
+      ],
+      "items": [
+        {
+          "id": "t3-i1",
+          "prop": "wisdom-pot",
+          "x": 330,
+          "y": 300,
+          "title": "A strange pot",
+          "text": "The pot glows faintly. In the tale, Anansi hopes to fill it with all the world's wisdom so that no one else can be as clever as he is."
+        },
+        {
+          "id": "t3-i2",
+          "prop": "web",
+          "x": 520,
+          "y": 440,
+          "title": "A spider's web",
+          "text": "Anansi is a spider and a man at once. In Akan stories he is clever, funny and often greedy, and his schemes teach lessons about how to live."
+        },
+        {
+          "id": "t3-i3",
+          "prop": "forest-tree",
+          "x": 880,
+          "y": 310,
+          "title": "The tallest tree",
+          "text": "Anansi eyes the tallest tree in the forest. If the pot is high enough, he thinks, nobody else will ever reach it."
+        }
+      ],
+      "startNode": "t3-s1-n1",
+      "nodes": [
+        {
+          "id": "t3-s1-n1",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Come closer, my child. Tonight I will tell you about Anansi, the spider who believed he was the wisest in the world.",
+          "next": "t3-s1-n2",
+          "unlocksCodex": [
+            "codex-akan"
+          ]
+        },
+        {
+          "id": "t3-s1-n2",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Anansi found a great pot and decided to fill it with all the wisdom there is, to keep for himself. Storytellers tell this tale in different ways; this is one of them.",
+          "next": "t3-s1-d1"
+        },
+        {
+          "id": "t3-s1-d1",
+          "type": "decision",
+          "prompt": "Can one person hold all the wisdom in the world?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Yes, if they are clever enough.",
+              "outcome": "Anansi thought so too. Let us see how that goes.",
+              "next": "t3-s1-c1"
+            },
+            {
+              "id": "b",
+              "text": "No. Everyone knows something others do not.",
+              "outcome": "A wise answer. Remember it when you meet Anansi's trouble.",
+              "next": "t3-s1-c1"
+            },
+            {
+              "id": "c",
+              "text": "Only with a very big pot!",
+              "outcome": "Ha! Anansi had a big pot, and it still was not enough.",
+              "next": "t3-s1-c1"
+            }
+          ]
+        },
+        {
+          "id": "t3-s1-c1",
+          "type": "context",
+          "title": "Anansi the Spider",
+          "text": "Anansi (also spelled Ananse) is a trickster hero of the Akan people of Ghana, shown as a spider, a man, or both. His stories, called anansesem, are told to entertain and to teach. They travelled with enslaved Africans to the Caribbean, where Anansi tales are still told today.",
+          "next": "t3-s1-n3",
+          "unlocksCodex": [
+            "codex-anansi"
+          ]
+        },
+        {
+          "id": "t3-s1-n3",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Watch where Anansi goes next. He is off to collect more wisdom. Come, run after him!",
+          "next": null
+        }
+      ]
+    },
+    {
+      "id": "t3-s2",
+      "title": "Collecting Knowledge",
+      "area": "wall-garden",
+      "nextScene": "t3-s3",
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Anansi",
+        "x": 760,
+        "y": 400,
+        "sprite": "anansi"
+      },
+      "props": [
+        {
+          "key": "bush",
+          "x": 420,
+          "y": 500
+        },
+        {
+          "key": "rock",
+          "x": 700,
+          "y": 520
+        }
+      ],
+      "items": [
+        {
+          "id": "t3-i4",
+          "prop": "basket",
+          "x": 350,
+          "y": 340,
+          "title": "A farmer's wisdom",
+          "text": "A farmer knows when to plant by the signs of the season. Anansi put this knowledge in his pot, but gave nothing back."
+        },
+        {
+          "id": "t3-i5",
+          "prop": "mortar",
+          "x": 600,
+          "y": 250,
+          "title": "A cook's wisdom",
+          "text": "A good cook knows how to make a little food feed many people. Anansi added this to his pot and told no one."
+        },
+        {
+          "id": "t3-i6",
+          "prop": "calabash",
+          "x": 880,
+          "y": 260,
+          "title": "A healer's wisdom",
+          "text": "A healer knows which plants soothe and which cure. Anansi took this knowledge too, and kept it hidden."
+        }
+      ],
+      "startNode": "t3-s2-n1",
+      "nodes": [
+        {
+          "id": "t3-s2-n1",
+          "type": "line",
+          "speaker": "Anansi",
+          "text": "Ha! I am the cleverest creature alive. I have the farmer's wisdom, the cook's wisdom and the healer's wisdom, and every drop goes into my pot!",
+          "next": "t3-s2-n2"
+        },
+        {
+          "id": "t3-s2-n2",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "He taught nobody what he learned. He only took. A farmer asked him to share.",
+          "next": "t3-s2-d1"
+        },
+        {
+          "id": "t3-s2-d1",
+          "type": "decision",
+          "prompt": "The farmer asks Anansi to share what he knows. What would a good neighbour do?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Share it, so the whole village grows stronger.",
+              "outcome": "That is what Anansi should have done.",
+              "next": "t3-s2-c1"
+            },
+            {
+              "id": "b",
+              "text": "Keep some secret, to stay ahead.",
+              "outcome": "That is what Anansi did. It did not end well.",
+              "next": "t3-s2-c1"
+            },
+            {
+              "id": "c",
+              "text": "Share it, but ask for something in return.",
+              "outcome": "A fair trade. But Anansi wanted everything and wanted to give nothing.",
+              "next": "t3-s2-c1"
+            }
+          ]
+        },
+        {
+          "id": "t3-s2-c1",
+          "type": "context",
+          "title": "Knowledge in many forms",
+          "text": "Every community holds knowledge in many forms: farming, cooking, healing, building, music and storytelling. In many African societies much of it was passed from elders to young people by speaking, watching and doing rather than by writing. This is called oral tradition, and it keeps knowledge alive across generations.",
+          "next": "t3-s2-n3",
+          "unlocksCodex": [
+            "codex-oral-tradition"
+          ]
+        },
+        {
+          "id": "t3-s2-n3",
+          "type": "line",
+          "speaker": "Anansi",
+          "text": "No one will ever be as wise as I am! I must hide this pot where nobody can reach it. The tallest tree!",
+          "next": null
+        }
+      ]
+    },
+    {
+      "id": "t3-s3",
+      "title": "The Impossible Climb",
+      "area": "big-tree",
+      "nextScene": "t3-s4",
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Ntikuma",
+        "x": 700,
+        "y": 300,
+        "sprite": "child"
+      },
+      "props": [
+        {
+          "key": "fern",
+          "x": 170,
+          "y": 500
+        },
+        {
+          "key": "fern",
+          "x": 420,
+          "y": 300
+        }
+      ],
+      "items": [
+        {
+          "id": "t3-i7",
+          "prop": "cowrie",
+          "x": 330,
+          "y": 300,
+          "title": "A cowrie shell",
+          "text": "Cowrie shells were used as money in many parts of West Africa for centuries. In stories they may stand for wealth, but wisdom cannot be bought.",
+          "unlocksCodex": [
+            "codex-cowrie"
+          ]
+        },
+        {
+          "id": "t3-i8",
+          "prop": "web",
+          "x": 520,
+          "y": 440,
+          "title": "A silver thread",
+          "text": "Spider silk is very strong for its thickness. Yet even a spider like Anansi cannot climb well with a heavy pot dangling in front of him."
+        },
+        {
+          "id": "t3-i9",
+          "prop": "wisdom-pot",
+          "x": 880,
+          "y": 330,
+          "title": "The heavy pot",
+          "text": "The pot swings and bumps against the trunk. Everything Anansi collected weighs on him, and the harder he holds on, the harder the climb."
+        }
+      ],
+      "startNode": "t3-s3-n1",
+      "nodes": [
+        {
+          "id": "t3-s3-n1",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Anansi tied the pot to his belly and began to climb. Up he went, then slid down. Again. And again.",
+          "next": "t3-s3-n2"
+        },
+        {
+          "id": "t3-s3-n2",
+          "type": "line",
+          "speaker": "Ntikuma",
+          "text": "Father, why do you carry the pot in front? You would climb better if you tied it to your back.",
+          "next": "t3-s3-d1"
+        },
+        {
+          "id": "t3-s3-d1",
+          "type": "decision",
+          "prompt": "Ntikuma has an idea. How should Anansi answer his young son?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Listen. Good ideas can come from anyone.",
+              "outcome": "Yes. That is what Anansi should have done.",
+              "next": "t3-s3-c1"
+            },
+            {
+              "id": "b",
+              "text": "Ignore him. He is only a child.",
+              "outcome": "That is how Anansi felt at first. His pride got in the way.",
+              "next": "t3-s3-c1"
+            },
+            {
+              "id": "c",
+              "text": "Be angry that the boy is right.",
+              "outcome": "Anansi was. It is hard to hear that someone else knows better.",
+              "next": "t3-s3-c1"
+            }
+          ]
+        },
+        {
+          "id": "t3-s3-c1",
+          "type": "context",
+          "title": "Wisdom from unexpected places",
+          "text": "In the tale, Anansi's young son Ntikuma suggests tying the pot to his back, and the idea works. Akan proverbs often say that wisdom is shared, such as: one head does not go into council. Good ideas can come from anyone, young or old.",
+          "next": "t3-s3-n3",
+          "unlocksCodex": [
+            "codex-proverbs",
+            "codex-ntikuma"
+          ]
+        },
+        {
+          "id": "t3-s3-n3",
+          "type": "line",
+          "speaker": "Anansi",
+          "text": "Hmph! I, the wisest of all, outdone by my own child? Then my pot cannot hold all the wisdom after all...",
+          "next": null
+        }
+      ]
+    },
+    {
+      "id": "t3-s4",
+      "title": "Wisdom for Everyone",
+      "area": "courtyard",
+      "final": true,
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Nana Yaa",
+        "x": 700,
+        "y": 300,
+        "sprite": "elder"
+      },
+      "props": [
+        {
+          "key": "bush",
+          "x": 110,
+          "y": 505
+        },
+        {
+          "key": "baobab",
+          "x": 700,
+          "y": 200
+        }
+      ],
+      "items": [
+        {
+          "id": "t3-i10",
+          "prop": "pots",
+          "x": 170,
+          "y": 250,
+          "title": "Scattered wisdom",
+          "text": "Some say the pieces of wisdom landed in every home and field. A little of it is inside you too."
+        },
+        {
+          "id": "t3-i11",
+          "prop": "drum",
+          "x": 520,
+          "y": 440,
+          "title": "The gathering drum",
+          "text": "A drum calls the village together to listen and decide as one. In the story's world, wisdom is shared in company, not locked away."
+        },
+        {
+          "id": "t3-i12",
+          "prop": "campfire",
+          "x": 860,
+          "y": 350,
+          "title": "Evening stories",
+          "text": "Listeners answer, laugh and join in. Around the fire, a story belongs to everyone who tells it and to everyone who hears it."
+        }
+      ],
+      "startNode": "t3-s4-n1",
+      "nodes": [
+        {
+          "id": "t3-s4-n1",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Anansi was so angry that he threw the pot to the ground. It broke, and the wisdom flew out over the whole world.",
+          "next": "t3-s4-n2"
+        },
+        {
+          "id": "t3-s4-n2",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Everyone caught a little. That is why every person knows something, and why no one knows everything.",
+          "next": "t3-s4-d1"
+        },
+        {
+          "id": "t3-s4-d1",
+          "type": "decision",
+          "prompt": "What should the villagers do with the wisdom that landed among them?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Keep it to themselves, like Anansi.",
+              "outcome": "Then the pot would have been broken for nothing.",
+              "next": "t3-s4-c1"
+            },
+            {
+              "id": "b",
+              "text": "Share it and learn from each other.",
+              "outcome": "Yes. That is the lesson of the story.",
+              "next": "t3-s4-c1"
+            },
+            {
+              "id": "c",
+              "text": "Write it down and lock it away.",
+              "outcome": "Writing helps, but wisdom grows when people use it and share it.",
+              "next": "t3-s4-c1"
+            }
+          ]
+        },
+        {
+          "id": "t3-s4-c1",
+          "type": "context",
+          "title": "Why stories matter",
+          "text": "Folktales like Anansi's are told in many versions; this retelling is only one of them. Stories were a way for communities to teach values such as humility and cooperation. By telling and retelling them, each generation keeps shared knowledge alive. Sankofa fits well: we look back at stories to learn for the future.",
+          "next": "t3-s4-n3"
+        },
+        {
+          "id": "t3-s4-n3",
+          "type": "line",
+          "speaker": "Nana Yaa",
+          "text": "Now go, and share a little wisdom of your own. That is how the web grows. Well walked, child.",
+          "next": null
+        }
+      ]
+    }
+  ]
+}

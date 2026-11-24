@@ -25,3 +25,6 @@ Things lower on the screen draw in front. Props are decoration only; use `obstac
 Add the drawing and register it (`PROPS`, `STYLES`, `BACKGROUNDS`), add its name to `src/assets/manifest.js`, run `npm run art`. A new area id with no background falls back to the grey `placeholder`.
 
 If a picture file is missing the game still runs and shows plain shapes instead.
+
+## Added in 0.4.0
+Sprites: `griot`, `child`, `anansi`. Props: kora, iron-rod, anvil, tent, spears, wisdom-pot, web, fern, forest-tree, basket, calabash, campfire, cowrie, mortar. Backgrounds: forest, kirina, big-tree. Drawn in `art-src/more.mjs` and `characters.mjs`; registered in `build-art.mjs` and `src/assets/manifest.js`. All are placeholders in the same original style; replace by keeping file name and size.

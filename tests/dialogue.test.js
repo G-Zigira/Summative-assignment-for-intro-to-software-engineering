@@ -8,6 +8,8 @@ describe('DialogueRunner', () => {
   it('walks a scene: line -> decision -> outcome -> context -> line -> scene end', () => {
     const runner = new DialogueRunner(trail1);
     let step = runner.startScene('t1-s1');
+    expect(step.node.id).toBe('t1-s1-n0'); // tutorial narrator line
+    step = runner.advance();
     expect(step.node.id).toBe('t1-s1-n1');
     step = runner.advance();
     expect(step.node.id).toBe('t1-s1-n2');
@@ -29,16 +31,16 @@ describe('DialogueRunner', () => {
 
   it('a different choice leads to the same next node (choices never block progress)', () => {
     const a = new DialogueRunner(trail1);
-    a.startScene('t1-s1'); a.advance(); a.advance();
+    a.startScene('t1-s1'); a.advance(); a.advance(); a.advance();
     const b = new DialogueRunner(trail1);
-    b.startScene('t1-s1'); b.advance(); b.advance();
+    b.startScene('t1-s1'); b.advance(); b.advance(); b.advance();
     expect(a.choose('a').step.node.id).toBe(b.choose('b').step.node.id);
   });
 
   it('restarting a scene always begins at the first line (FR 3.2.4)', () => {
     const runner = new DialogueRunner(trail1);
     runner.startScene('t1-s1'); runner.advance();
-    expect(runner.startScene('t1-s1').node.id).toBe('t1-s1-n1');
+    expect(runner.startScene('t1-s1').node.id).toBe('t1-s1-n0');
   });
 
   it('the final scene reports trailComplete', () => {
@@ -51,7 +53,7 @@ describe('DialogueRunner', () => {
   it('throws helpful errors for misuse', () => {
     const runner = new DialogueRunner(trail1);
     expect(() => runner.startScene('nope')).toThrow(/Unknown scene/);
-    runner.startScene('t1-s1'); runner.advance(); runner.advance();
+    runner.startScene('t1-s1'); runner.advance(); runner.advance(); runner.advance();
     expect(() => runner.advance()).toThrow(/choose/);
     expect(() => runner.choose('zzz')).toThrow(/Unknown option/);
   });

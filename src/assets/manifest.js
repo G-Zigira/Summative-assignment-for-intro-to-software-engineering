@@ -4,9 +4,10 @@
 
 export const ASSET_SCALE = 0.5; // pictures are drawn at 2x and shown at half size (sharp on high-DPI screens)
 
-export const BACKGROUNDS = ['title', 'courtyard', 'wall-garden', 'road', 'placeholder'];
-export const PROPS = ['baobab', 'stall', 'pots', 'drum', 'carved-door', 'bush', 'rock', 'signpost', 'rug'];
-export const SPRITES = ['player', 'elder', 'guide']; // 4 x 4 sheets of 96 x 128 frames: rows = down, left, right, up
+export const BACKGROUNDS = ['title', 'courtyard', 'wall-garden', 'road', 'forest', 'kirina', 'big-tree', 'placeholder'];
+export const PROPS = ['baobab', 'stall', 'pots', 'drum', 'carved-door', 'bush', 'rock', 'signpost', 'rug',
+  'kora', 'iron-rod', 'anvil', 'tent', 'spears', 'wisdom-pot', 'web', 'fern', 'forest-tree', 'basket', 'calabash', 'campfire', 'cowrie', 'mortar'];
+export const SPRITES = ['player', 'elder', 'guide', 'griot', 'child', 'anansi']; // 4 x 4 sheets of 96 x 128 frames: rows = down, left, right, up
 export const SPRITE_FRAME = { w: 96, h: 128 };
 export const DIRECTIONS = ['down', 'left', 'right', 'up'];
 

@@ -6,7 +6,7 @@ import { session } from '../session.js';
 import { TRAILS } from '../content/index.js';
 import { bgKey, hasTexture } from '../assets/manifest.js';
 import { audio } from '../audio/audioManager.js';
-import { isTrailUnlocked, isTrailCompleted } from '../systems/unlocks.js';
+import { isTrailUnlocked, isTrailCompleted, fragmentProgress } from '../systems/unlocks.js';
 
 // FR 3.3: locked trails show a lock and cannot be started.
 export class TrailSelectScene extends Phaser.Scene {
@@ -24,6 +24,10 @@ export class TrailSelectScene extends Phaser.Scene {
     audio.playMusic('title');
     makeText(this, W / 2, 50, 'Choose a trail', 38, { fontStyle: 'bold', color: COLORS.accentText }).setOrigin(0.5);
 
+    const pieces = (trail) => {
+      const { found, total } = fragmentProgress(session.save, trail);
+      return total > 0 && isTrailUnlocked(session.save, trail.id) ? `   (story pieces ${found}/${total})` : '';
+    };
     const rowH = Math.max(76, minTarget(this) + 12);
     TRAILS.forEach((trail, i) => {
       const unlocked = isTrailUnlocked(session.save, trail.id);
@@ -31,7 +35,7 @@ export class TrailSelectScene extends Phaser.Scene {
       const status = !unlocked ? '[LOCKED]  ' : done ? '[DONE]  ' : '';
       makeButton(this, {
         x: W / 2, y: 130 + i * rowH, width: 640, height: rowH - 12, wrap: true,
-        label: `${status}Trail ${trail.order}: ${trail.title}`,
+        label: `${status}${trail.tutorial ? 'Tutorial' : `Trail ${trail.order}`}: ${trail.title}${pieces(trail)}`,
         enabled: unlocked,
         onClick: () => this.scene.start('GameScene', { trailId: trail.id }),
       });

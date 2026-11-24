@@ -37,6 +37,7 @@ export class RunnerScene extends Phaser.Scene {
     this.state = 'ready'; // 'ready' | 'running' | 'crashed' | 'won'
     this.run = createRun(Math.floor(Math.random() * 1e9));
     this.obstacleViews = [];
+    this.pickupViews = [];
     this.lockUntil = 0;
     this.leaving = false; // scene objects are reused by Phaser, so reset every field here
 
@@ -72,7 +73,10 @@ export class RunnerScene extends Phaser.Scene {
     this.message = makeText(this, W / 2, 190, '', 28, {
       fontStyle: 'bold', align: 'center', color: COLORS.text, backgroundColor: '#1f1a16dd', padding: { x: 16, y: 10 },
     }).setOrigin(0.5).setDepth(15);
-    this.#say(touch ? 'Tap to jump over the trees.\nTap to start!' : 'Press Space (or E) to jump over the trees.\nPress it to start!');
+    this.cowrieText = label('Cowries 0', 16, 96, 16, { color: COLORS.accentText });
+    this.#say(touch
+      ? 'Tap to jump. Tap again in the air to double jump!\nTap to start.'
+      : 'Space (or E) jumps. Press again in the air\nto double jump over tall trees!\nPress it to start.');
 
     if (touch) {
       const size = Math.max(72, minTarget(this));
@@ -103,13 +107,22 @@ export class RunnerScene extends Phaser.Scene {
   }
 
   #jump() {
-    if (jump(this.run)) audio.playSfx('jump');
+    const result = jump(this.run);
+    if (result === 'jump') audio.playSfx('jump');
+    else if (result === 'double') {
+      audio.playSfx('doubleJump');
+      // a little ring puff under the runner so the second jump is visible
+      const ring = this.add.circle(R.PLAYER_X, R.GROUND_Y - this.run.y, 10, 0xffffff, 0.5).setDepth(1);
+      this.tweens.add({ targets: ring, scale: 3, alpha: 0, duration: 260, onComplete: () => ring.destroy() });
+    }
   }
 
   #retry() {
     this.run = createRun(Math.floor(Math.random() * 1e9));
     this.obstacleViews.forEach((v) => v.destroy());
     this.obstacleViews = [];
+    this.pickupViews.forEach((v) => v.destroy());
+    this.pickupViews = [];
     this.state = 'running';
     this.message.setVisible(false);
     this.player.clearTint?.();
@@ -168,7 +181,31 @@ export class RunnerScene extends Phaser.Scene {
       view.x = o.x - run.distance + o.w / 2;
     }
 
+    // Cowrie shells: float over the obstacles; pop when collected.
+    const livePickups = new Set(run.pickups);
+    this.pickupViews = this.pickupViews.filter((v) => {
+      if (!livePickups.has(v.pickup)) { v.destroy(); return false; }
+      if (v.pickup.taken && !v.popped) {
+        v.popped = true;
+        audio.playSfx('collect');
+        this.tweens.add({ targets: v, y: v.y - 30, alpha: 0, scale: v.scale * 1.6, duration: 220 });
+      }
+      return true;
+    });
+    for (const c of run.pickups) {
+      let view = this.pickupViews.find((v) => v.pickup === c);
+      if (!view && !c.taken) {
+        view = hasTexture(this, propKey('cowrie'))
+          ? this.add.image(0, 0, propKey('cowrie')).setScale(0.5).setDepth(1)
+          : this.add.circle(0, 0, 10, 0xe0a030).setDepth(1);
+        view.pickup = c;
+        this.pickupViews.push(view);
+      }
+      if (view && !view.popped) { view.x = c.x - run.distance; view.y = R.GROUND_Y - c.h - 12; }
+    }
+
     // HUD
+    this.cowrieText.setText(`Cowries ${run.cowries}`);
     const score = Math.min(scoreOf(run), R.TARGET_SCORE);
     this.scoreText.setText(`Score ${score} / ${R.TARGET_SCORE}`);
     this.bar.width = Math.max(4, 236 * (score / R.TARGET_SCORE));

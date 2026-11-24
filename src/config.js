@@ -33,6 +33,9 @@ export const CONFIG = Object.freeze({
     ACCEL: 10,             // px/s gained per second
     GRAVITY: 2400,
     JUMP_VELOCITY: 800,    // peak height about 133 px
+    AIR_JUMP_VELOCITY: 760, // the second jump, pressed in the air (double jump)
+    MAX_JUMPS: 2,
+    COWRIE_POINTS: 5,      // each cowrie shell collected adds this many points
     GROUND_Y: 450,         // where the runner's feet stand
     PLAYER_X: 150,
     MIN_GAP_AIRTIME: 0.95, // gaps are at least this many seconds of running (always jumpable)
@@ -46,6 +49,9 @@ export const CONFIG = Object.freeze({
 
   // --- Codex and dialogue (FR 3.4, FR 4.1, FR 4.2) ------------------------
   CODEX_TOAST_MS: 2500,
+  TYPE_MS_PER_CHAR: 12,     // text appears letter by letter; any press shows the rest
+  MAX_ITEM_WORDS: 45,       // a story piece (touched object) is a short note
+  MAX_ITEMS_PER_SCENE: 4,
   CHOICES_MIN: 2,
   CHOICES_MAX: 4,
   MAX_CONTEXT_WORDS: 80,

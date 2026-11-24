@@ -19,11 +19,11 @@ export class PauseScene extends Phaser.Scene {
     const game = () => this.scene.get('GameScene');
     this.status = makeText(this, W / 2, H - 50, '', 20, { color: COLORS.accentText }).setOrigin(0.5);
 
-    makeButton(this, { x: W / 2, y: 150, width: 320, label: 'Resume', onClick: () => this.#resume() });
+    makeButton(this, { x: W / 2, y: 130, width: 320, label: 'Resume', onClick: () => this.#resume() });
 
     // FR 3.5.1: Save is disabled when storage is unavailable.
     makeButton(this, {
-      x: W / 2, y: 230, width: 320, label: session.storageAvailable ? 'Save' : 'Save (unavailable)',
+      x: W / 2, y: 200, width: 320, label: session.storageAvailable ? 'Save' : 'Save (unavailable)',
       enabled: session.storageAvailable,
       onClick: () => {
         const result = game().manualSave();
@@ -33,7 +33,7 @@ export class PauseScene extends Phaser.Scene {
     });
 
     makeButton(this, {
-      x: W / 2, y: 310, width: 320, label: 'Codex',
+      x: W / 2, y: 270, width: 320, label: 'Codex',
       onClick: () => {
         this.scene.launch('CodexScene', { from: 'PauseScene' });
         this.scene.bringToTop('CodexScene');
@@ -42,7 +42,16 @@ export class PauseScene extends Phaser.Scene {
     });
 
     makeButton(this, {
-      x: W / 2, y: 390, width: 320, label: 'Quit to Title',
+      x: W / 2, y: 340, width: 320, label: 'Settings',
+      onClick: () => {
+        this.scene.launch('SettingsScene', { from: 'PauseScene' });
+        this.scene.bringToTop('SettingsScene');
+        this.scene.pause();
+      },
+    });
+
+    makeButton(this, {
+      x: W / 2, y: 410, width: 320, label: 'Quit to Title',
       onClick: () => {
         this.scene.stop('GameScene');
         this.scene.start('TitleScene');

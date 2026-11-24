@@ -4,7 +4,7 @@
 import { createSafeStorage } from './systems/storage.js';
 import { SaveManager, createNewSave } from './systems/saveManager.js';
 import { resolveControlScheme } from './systems/device.js';
-import { textScale } from './systems/settings.js';
+import { textScale, sanitizeSettings } from './systems/settings.js';
 import { TRAIL_ORDER } from './content/index.js';
 
 export const session = {
@@ -16,7 +16,12 @@ export const session = {
   storageNoticeShown: false,
 };
 
-const freshSave = () => createNewSave({ firstTrailId: TRAIL_ORDER[0] });
+// A new game keeps the player's settings (volume, text size, controls) from before.
+const freshSave = () => {
+  const save = createNewSave({ firstTrailId: TRAIL_ORDER[0] });
+  if (session.save?.settings) save.settings = session.save.settings;
+  return save;
+};
 
 /** Called once by BootScene. FR 3.5.1: detect storage, load, never crash. */
 export function initSession(storage = createSafeStorage()) {
@@ -64,3 +69,17 @@ export function startNewGame() {
 
 export const controlScheme = () => resolveControlScheme(session.save.settings.controlScheme);
 export const currentTextScale = () => textScale(session.save.settings);
+
+/**
+ * Change settings (FR 5.1). If a valid save exists on disk, only its settings field is rewritten,
+ * so changing a setting in the middle of a scene never saves unsaved progress (SP-1..SP-4 stay
+ * the only save points). With no save yet the change lives in memory and is written at the
+ * first save point.
+ */
+export function updateSettings(patch) {
+  session.save = { ...session.save, settings: sanitizeSettings({ ...session.save.settings, ...patch }) };
+  if (!session.saveManager?.available) return { ok: false, skipped: true };
+  const stored = session.saveManager.load();
+  if (stored.status !== 'ok') return { ok: false, skipped: true };
+  return session.saveManager.write({ ...stored.save, settings: session.save.settings });
+}

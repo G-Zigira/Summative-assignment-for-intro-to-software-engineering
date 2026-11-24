@@ -5,6 +5,26 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-24
+
+### Added
+- Two new trails: **The Lion's Path** (Sundiata, 4 scenes) and **The Web of Wisdom** (Anansi, 4 scenes). Both are drafts (`review.status: "sample"`) and need fact-checking before release. Trail 1 is now the **Tutorial**
+- Story pieces: touchable objects in each scene (star marker, E / tap / click) that reveal a piece of the story; collected pieces are saved and counted (HUD, trail select). Optional, never required to progress
+- Completion code (`SK-<order>-<xxxx>`) shown when a trail is finished
+- Double jump in the runner (jump again in mid-air); cowrie shells to collect for bonus points
+- Settings screen (volume, text size, controls) from Title and Pause; saved with the game
+- Typewriter text in dialogue (first press completes the line, second advances)
+- Synthesized music and sound effects (`npm run audio`), wired to every slot; new art (6 characters, 14 props, 3 backgrounds)
+- New areas: forest, kirina, big-tree. 18 new Codex entries (21 total)
+
+### Fixed
+- The character could walk up into the sky/wall; walking is now limited to the ground
+- A tall tree in the runner could not be jumped; the double jump clears it (and tests check it)
+
+### Changed
+- Save format gains an optional `fragments` list; older saves still load
+- Pause and Title menus re-spaced for the Settings button
+
 ## [0.3.0] - 2026-11-21
 
 ### Added

@@ -9,7 +9,7 @@ import { getTrail, getCodexEntry, TRAIL_ORDER } from '../content/index.js';
 import { DialogueRunner } from '../systems/dialogue.js';
 import { bgKey, propKey, spriteKey, hasTexture, ASSET_SCALE } from '../assets/manifest.js';
 import { audio } from '../audio/audioManager.js';
-import { completeTrail, unlockCodexEntries, recordChoice } from '../systems/unlocks.js';
+import { completeTrail, unlockCodexEntries, recordChoice, collectFragment, completionCode } from '../systems/unlocks.js';
 
 // The play scene: one story scene at a time. Walk, talk to the NPC, make choices,
 // read context panels, unlock Codex entries, and save at the save points
@@ -54,7 +54,9 @@ export class GameScene extends Phaser.Scene {
     session.save = { ...save, trailId: this.trail.id, sceneId: this.story.id, areaId: this.story.area };
 
     // --- World ---------------------------------------------------------------
-    this.physics.world.setBounds(0, 0, W, H);
+    // The top of every area picture is a wall or the sky: people can only walk on the floor.
+    // Bounds start PLAYER_SIZE above WALK_TOP so the character's feet can reach the wall's base but no higher.
+    this.physics.world.setBounds(0, WALK_TOP - PLAYER_SIZE, W, H - WALK_TOP + PLAYER_SIZE);
     const bg = bgKey(this.story.area);
     if (hasTexture(this, bg)) this.add.image(W / 2, H / 2, bg).setScale(ASSET_SCALE).setDepth(-10);
     else if (hasTexture(this, bgKey('placeholder'))) this.add.image(W / 2, H / 2, bgKey('placeholder')).setScale(ASSET_SCALE).setDepth(-10);
@@ -85,6 +87,21 @@ export class GameScene extends Phaser.Scene {
     }).setOrigin(0.5).setDepth(3);
     this.npc.setInteractive({ useHandCursor: true });
     this.npc.on('pointerup', () => this.#tryInteract()); // FR 1.2: click works on desktop
+
+    // Story pieces: objects the player can touch (E / tap Talk / click) to read a short note.
+    this.items = (this.story.items ?? []).map((it) => {
+      const image = this.#addProp(it.prop, it.x, it.y, it.scale ?? 1);
+      const found = (session.save.fragments ?? []).includes(it.id);
+      const marker = found ? null : this.add.star(it.x, it.y - (image ? image.displayHeight : 40) - 14, 5, 5, 11, 0xffe08a)
+        .setDepth(3).setStrokeStyle(2, 0xb07a1a);
+      if (marker) this.tweens.add({ targets: marker, y: marker.y - 8, angle: 25, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      image?.setInteractive({ useHandCursor: true }).on('pointerup', () => this.#tryInteract());
+      return { ...it, image, marker, found, cx: it.x, cy: it.y - 24 };
+    });
+    this.piecesText = makeText(this, 16, 44, '', 16, {
+      color: COLORS.accentText, backgroundColor: '#1f1a16cc', padding: { x: 8, y: 4 },
+    }).setDepth(3).setVisible(this.items.length > 0);
+    this.#updatePieces();
 
     this.player = this.add.rectangle(start.x, start.y, PLAYER_SIZE, PLAYER_SIZE, 0xf5efe6).setDepth(2);
     this.physics.add.existing(this.player);
@@ -160,12 +177,17 @@ export class GameScene extends Phaser.Scene {
     this.#syncPlayerSprite(v);
 
     // FR 1.2: prompt when in range; E / Enter / Talk button starts the dialogue.
-    const inRange = this.#inRange();
-    this.prompt.setVisible(inRange);
+    const target = this.#nearestTarget();
+    if (target) {
+      const verb = target.kind === 'npc' ? 'talk' : 'look';
+      this.prompt.setText(this.scheme === 'touch' ? 'Tap Talk' : `Press E to ${verb}`);
+      this.prompt.setPosition(target.x, target.y - (target.kind === 'npc' ? 104 : (target.item.image?.displayHeight ?? 40) + 36));
+    }
+    this.prompt.setVisible(Boolean(target));
     const pressedE = JustDown(this.keys.interact);
     const pressedEnter = JustDown(this.keys.enter);
     const tappedTalk = this.touch ? this.touch.consumeInteract() : false;
-    if (inRange && (pressedE || pressedEnter || tappedTalk)) this.#startDialogue();
+    if (target && (pressedE || pressedEnter || tappedTalk)) this.#interactWith(target);
 
     if (JustDown(this.keys.esc)) this.#openPause();
   }
@@ -211,16 +233,70 @@ export class GameScene extends Phaser.Scene {
   }
 
   // ---------------------------------------------------------------- interaction
-  #inRange() {
-    return Phaser.Math.Distance.Between(this.player.x, this.player.y, this.npc.x, this.npc.y) <= CONFIG.INTERACT_RANGE;
+  /** The closest thing the player can act on right now (the NPC or a story piece), or null. */
+  #nearestTarget() {
+    const { x, y } = this.player;
+    let best = null;
+    let bestD = Infinity;
+    const consider = (kind, tx, ty, item) => {
+      const d = Phaser.Math.Distance.Between(x, y, tx, ty);
+      if (d <= CONFIG.INTERACT_RANGE && d < bestD) { best = { kind, x: tx, y: ty, item }; bestD = d; }
+    };
+    consider('npc', this.npc.x, this.npc.y);
+    for (const it of this.items ?? []) consider('item', it.cx, it.cy + 24, it);
+    return best;
   }
 
   #tryInteract() {
-    if (!this.dialogueOpen && this.#inRange()) this.#startDialogue();
+    if (this.dialogueOpen) return;
+    const target = this.#nearestTarget();
+    if (target) this.#interactWith(target);
+  }
+
+  #interactWith(target) {
+    if (target.kind === 'npc') this.#startDialogue();
+    else this.#readPiece(target.item);
+  }
+
+  #updatePieces() {
+    const total = this.items.length;
+    const found = this.items.filter((i) => i.found).length;
+    this.piecesText.setText(`Story pieces ${found}/${total}`);
+  }
+
+  /** A touched object: a short note. The first time counts as a story piece (saved at the next save point). */
+  #readPiece(item) {
+    if (this.dialogueOpen) return;
+    this.dialogueOpen = true;
+    this.#setHudVisible(false);
+    const first = !item.found;
+    if (first) {
+      const { save } = collectFragment(session.save, item.id);
+      session.save = save;
+      item.found = true;
+      item.marker?.destroy();
+      item.marker = null;
+      audio.playSfx('collect');
+      this.#updatePieces();
+    } else audio.playSfx('click');
+    this.ui.showMessage({
+      title: `Story piece: ${item.title}`, text: item.text, context: true, buttonLabel: 'Close',
+      onClose: () => {
+        this.ui.hide();
+        this.dialogueOpen = false;
+        this.#setHudVisible(true);
+        if (item.unlocksCodex?.length) this.#applyUnlocks(item.unlocksCodex);
+        if (first) {
+          const left = this.items.filter((i) => !i.found).length;
+          this.#toast(left === 0 ? 'All story pieces here found!' : `Story piece found (${this.items.length - left}/${this.items.length})`, 2200, COLORS.accentText);
+        }
+      },
+    });
   }
 
   #setHudVisible(visible) {
     this.prompt.setVisible(false);
+    this.piecesText?.setVisible(visible && this.items.length > 0);
     this.touch?.setVisible(visible);
     this.menuButton.setVisible(visible);
   }
@@ -282,7 +358,7 @@ export class GameScene extends Phaser.Scene {
       const unlockedText = result.newlyUnlocked ? ' A new trail is unlocked.' : '';
       this.ui.showMessage({
         title: 'Trail complete!',
-        text: `You finished "${this.trail.title}".${unlockedText}`,
+        text: `You finished "${this.trail.title}".${unlockedText}\nYour completion code: ${completionCode(session.save, this.trail)}`,
         buttonLabel: 'Back to trails',
         onClose: () => {
           this.ui.hide();

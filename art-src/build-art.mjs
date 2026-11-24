@@ -15,6 +15,7 @@ import { characterSheet, STYLES } from './characters.mjs';
 import { PROPS, emblemIcon } from './props.mjs';
 import { BACKGROUNDS } from './backgrounds.mjs';
 import { runnerSky, runnerGround } from './runner.mjs';
+import { MORE_PROPS, MORE_BACKGROUNDS } from './more.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const assets = (...p) => path.join(root, 'public', 'assets', ...p);
@@ -25,10 +26,10 @@ const jobs = [];
 for (const name of Object.keys(STYLES)) {
   jobs.push({ name, ...characterSheet(name), type: 'png', out: assets('sprites', `${name}.png`), svgOut: svgs(`sprite-${name}.svg`) });
 }
-for (const [name, make] of Object.entries(PROPS)) {
+for (const [name, make] of Object.entries({ ...PROPS, ...MORE_PROPS })) {
   jobs.push({ name, ...make(), type: 'png', out: assets('props', `${name}.png`), svgOut: svgs(`prop-${name}.svg`) });
 }
-for (const [name, make] of Object.entries(BACKGROUNDS)) {
+for (const [name, make] of Object.entries({ ...BACKGROUNDS, ...MORE_BACKGROUNDS })) {
   jobs.push({ name, ...make(), type: 'jpeg', quality: 80, out: assets('backgrounds', `${name}.jpg`), svgOut: svgs(`bg-${name}.svg`) });
 }
 jobs.push({ name: 'runner-sky', ...runnerSky(), type: 'jpeg', quality: 80, out: assets('backgrounds', 'runner-sky.jpg'), svgOut: svgs('bg-runner-sky.svg') });

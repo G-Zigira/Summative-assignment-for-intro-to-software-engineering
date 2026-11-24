@@ -1,8 +1,8 @@
 {
   "id": "trail2",
   "order": 2,
-  "title": "Trail 2 (placeholder)",
-  "summary": "PLACEHOLDER so the unlock chain (FR 3.3) can be tested. Replace with a real trail.",
+  "title": "The Lion's Path",
+  "summary": "Follow Sundiata Keita from a child who could not walk to the founder of the Mali Empire. Draft story: needs fact-checking.",
   "review": {
     "status": "sample",
     "reviewer": null,
@@ -12,26 +12,515 @@
   "scenes": [
     {
       "id": "t2-s1",
-      "title": "Placeholder",
-      "area": "placeholder",
-      "final": true,
+      "title": "A Prophecy in Kangaba",
+      "area": "courtyard",
+      "nextScene": "t2-s2",
       "playerStart": {
         "x": 120,
-        "y": 200
+        "y": 230
       },
       "npc": {
-        "name": "Guide",
+        "name": "Jeli Balla",
         "x": 700,
-        "y": 270,
-        "sprite": "guide"
+        "y": 300,
+        "sprite": "griot"
       },
+      "props": [
+        {
+          "key": "carved-door",
+          "x": 480,
+          "y": 172
+        },
+        {
+          "key": "baobab",
+          "x": 700,
+          "y": 200
+        },
+        {
+          "key": "bush",
+          "x": 110,
+          "y": 505
+        },
+        {
+          "key": "rug",
+          "x": 330,
+          "y": 470
+        }
+      ],
+      "items": [
+        {
+          "id": "t2-i1",
+          "prop": "kora",
+          "x": 330,
+          "y": 300,
+          "title": "The jeli's kora",
+          "text": "A kora is a harp-lute with 21 strings, played by jeliw of the Mande peoples. The music helps listeners feel the story and helps the jeli remember it.",
+          "unlocksCodex": [
+            "codex-kora"
+          ]
+        },
+        {
+          "id": "t2-i2",
+          "prop": "drum",
+          "x": 520,
+          "y": 440,
+          "title": "The royal drum",
+          "text": "In the epic, news and calls to gather travel by drum and by word of mouth. Kangaba was a small Mande kingdom in the upper Niger region."
+        },
+        {
+          "id": "t2-i3",
+          "prop": "pots",
+          "x": 170,
+          "y": 250,
+          "title": "Sogolon's jar",
+          "text": "A water jar stands by the queen's door. In the epic, Sogolon came from the land of Do and became the wife of King Maghan Kon Fatta.",
+          "unlocksCodex": [
+            "codex-sogolon"
+          ]
+        }
+      ],
       "startNode": "t2-s1-n1",
       "nodes": [
         {
           "id": "t2-s1-n1",
           "type": "line",
-          "speaker": "Guide",
-          "text": "This trail has not been written yet.",
+          "speaker": "Jeli Balla",
+          "text": "Sit, child, and listen. I am a jeli, and I will tell you the story of Sundiata, the Lion of Mali. My words come from my father, and his from his father before him.",
+          "next": "t2-s1-n2"
+        },
+        {
+          "id": "t2-s1-n2",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "It begins in Kangaba, a small Mande kingdom, where King Maghan Kon Fatta ruled. Tellers differ on the details; this is one way of telling it.",
+          "next": "t2-s1-d1",
+          "unlocksCodex": [
+            "codex-kangaba"
+          ]
+        },
+        {
+          "id": "t2-s1-d1",
+          "type": "decision",
+          "prompt": "Why does a king keep a jeli at court?",
+          "options": [
+            {
+              "id": "a",
+              "text": "To remember the history of the kingdom.",
+              "outcome": "Yes. A jeli is the memory of the people.",
+              "next": "t2-s1-c1"
+            },
+            {
+              "id": "b",
+              "text": "To entertain guests with music.",
+              "outcome": "Music is part of it, but a jeli does much more.",
+              "next": "t2-s1-c1"
+            },
+            {
+              "id": "c",
+              "text": "To advise the king.",
+              "outcome": "Also true. Jeliw often counselled rulers.",
+              "next": "t2-s1-c1"
+            }
+          ]
+        },
+        {
+          "id": "t2-s1-c1",
+          "type": "context",
+          "title": "The Jeli",
+          "text": "A jeli (plural jeliw, often called a griot in English) is a West African oral historian, musician and adviser. Among the Mande peoples, jeliw keep family histories and epics such as Sundiata in memory and pass them on in performance, often with a kora or balafon. The epic was told for centuries before it was written down.",
+          "next": "t2-s1-n3",
+          "unlocksCodex": [
+            "codex-jeli"
+          ]
+        },
+        {
+          "id": "t2-s1-n3",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "A hunter once foretold that the king would have a son who would become a great ruler. The child was named Sundiata.",
+          "next": "t2-s1-n4"
+        },
+        {
+          "id": "t2-s1-n4",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "But Sundiata could not walk, even as a boy. Come, let us see how he stood up. The road is long, so you will have to run it!",
+          "next": null
+        }
+      ]
+    },
+    {
+      "id": "t2-s2",
+      "title": "The Iron Rod",
+      "area": "wall-garden",
+      "nextScene": "t2-s3",
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Jeli Balla",
+        "x": 760,
+        "y": 400,
+        "sprite": "griot"
+      },
+      "props": [
+        {
+          "key": "bush",
+          "x": 420,
+          "y": 300
+        },
+        {
+          "key": "rock",
+          "x": 600,
+          "y": 520
+        },
+        {
+          "key": "fern",
+          "x": 700,
+          "y": 520
+        }
+      ],
+      "items": [
+        {
+          "id": "t2-i4",
+          "prop": "anvil",
+          "x": 360,
+          "y": 340,
+          "title": "The anvil",
+          "text": "In Mande societies, blacksmiths (numu) were respected for their skill. In the epic, a blacksmith forges the iron that Sundiata uses to stand.",
+          "unlocksCodex": [
+            "codex-blacksmith"
+          ]
+        },
+        {
+          "id": "t2-i5",
+          "prop": "iron-rod",
+          "x": 600,
+          "y": 260,
+          "title": "The iron rod",
+          "text": "The rod bends as Sundiata pulls himself up. Tellers use this picture to say that strength comes from effort, not only from birth."
+        },
+        {
+          "id": "t2-i6",
+          "prop": "pots",
+          "x": 880,
+          "y": 250,
+          "title": "Sogolon's patience",
+          "text": "Sogolon bore insults while others doubted her son. In the epic, her faith in him never wavered."
+        }
+      ],
+      "startNode": "t2-s2-n1",
+      "nodes": [
+        {
+          "id": "t2-s2-n1",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "Sundiata was already a boy, yet he could not stand. Other children laughed. Sassouma, the king's first wife, mocked his mother Sogolon.",
+          "next": "t2-s2-n2"
+        },
+        {
+          "id": "t2-s2-n2",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "One day he asked a blacksmith for iron rods. They were so heavy that others could barely lift them. What gave him the strength to stand?",
+          "next": "t2-s2-d1"
+        },
+        {
+          "id": "t2-s2-d1",
+          "type": "decision",
+          "prompt": "What gave Sundiata the strength to stand?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Anger at the people who laughed at him.",
+              "outcome": "Perhaps. But the epic stresses something calmer.",
+              "next": "t2-s2-c1"
+            },
+            {
+              "id": "b",
+              "text": "His mother's belief and his own patience.",
+              "outcome": "Yes. The epic returns again and again to patience and belief.",
+              "next": "t2-s2-c1"
+            },
+            {
+              "id": "c",
+              "text": "Magic alone.",
+              "outcome": "Magic is in the tellings, but so is hard effort.",
+              "next": "t2-s2-c1"
+            }
+          ]
+        },
+        {
+          "id": "t2-s2-c1",
+          "type": "context",
+          "title": "Sundiata stands",
+          "text": "In the epic, Sundiata Keita, son of King Maghan Kon Fatta and Sogolon, cannot walk as a child. Using iron rods made by a blacksmith, he pulls himself upright and the rods bend. Historians cannot confirm the scene, but it became a symbol of perseverance and of the Mande respect for blacksmiths.",
+          "next": "t2-s2-n3",
+          "unlocksCodex": [
+            "codex-sundiata"
+          ]
+        },
+        {
+          "id": "t2-s2-n3",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "He stood tall, and from that day he grew strong in body and in spirit. But his path was only beginning.",
+          "next": "t2-s2-n4"
+        },
+        {
+          "id": "t2-s2-n4",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "Now we must leave this garden. Danger is coming for Sundiata and his mother. Run with me!",
+          "next": null
+        }
+      ]
+    },
+    {
+      "id": "t2-s3",
+      "title": "Exile on the Road",
+      "area": "road",
+      "nextScene": "t2-s4",
+      "playerStart": {
+        "x": 120,
+        "y": 200
+      },
+      "npc": {
+        "name": "Jeli Balla",
+        "x": 760,
+        "y": 270,
+        "sprite": "griot"
+      },
+      "props": [
+        {
+          "key": "rock",
+          "x": 200,
+          "y": 500
+        },
+        {
+          "key": "bush",
+          "x": 860,
+          "y": 330
+        }
+      ],
+      "items": [
+        {
+          "id": "t2-i7",
+          "prop": "baobab",
+          "x": 560,
+          "y": 205,
+          "title": "The baobab tree",
+          "text": "In one telling, Sogolon needed baobab leaves. When another woman refused her, Sundiata pulled a whole baobab from the ground and carried it to his mother.",
+          "unlocksCodex": [
+            "codex-baobab"
+          ]
+        },
+        {
+          "id": "t2-i8",
+          "prop": "campfire",
+          "x": 420,
+          "y": 440,
+          "title": "Camp at night",
+          "text": "In exile, Sundiata, Sogolon and their small group moved from place to place, sheltering in the courts of rulers who respected them."
+        },
+        {
+          "id": "t2-i9",
+          "prop": "signpost",
+          "x": 330,
+          "y": 270,
+          "title": "The long road",
+          "text": "Exile lasted for years in the tellings. The travellers learned new customs, made allies and never forgot where they came from."
+        }
+      ],
+      "startNode": "t2-s3-n1",
+      "nodes": [
+        {
+          "id": "t2-s3-n1",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "King Maghan died. Sassouma's son, Dankaran Touman, took the throne, and the new queen mother made life hard for Sogolon and Sundiata.",
+          "next": "t2-s3-n2"
+        },
+        {
+          "id": "t2-s3-n2",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "So Sogolon, her children and Sundiata left Kangaba and walked into exile.",
+          "next": "t2-s3-d1"
+        },
+        {
+          "id": "t2-s3-d1",
+          "type": "decision",
+          "prompt": "Sundiata has lost his home. What should he carry with him?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Anger, so he never forgets the wrong.",
+              "outcome": "A strong feeling, but the epic shows him carrying something steadier.",
+              "next": "t2-s3-c1"
+            },
+            {
+              "id": "b",
+              "text": "Hope, and the lessons of his people.",
+              "outcome": "Yes. He grew in exile, learning and making friends.",
+              "next": "t2-s3-c1"
+            },
+            {
+              "id": "c",
+              "text": "Nothing. He should start fresh.",
+              "outcome": "Memory kept his dream alive. That is what Sankofa teaches.",
+              "next": "t2-s3-c1"
+            }
+          ]
+        },
+        {
+          "id": "t2-s3-c1",
+          "type": "context",
+          "title": "Years in exile",
+          "text": "After King Maghan's death, the epic says Sundiata and Sogolon were forced to leave Kangaba. They travelled through several lands, including Mema, whose ruler welcomed them. Sundiata grew into a respected warrior and leader. Meanwhile Soumaoro Kanté, king of the Sosso, conquered Mande lands.",
+          "next": "t2-s3-n3",
+          "unlocksCodex": [
+            "codex-mema"
+          ]
+        },
+        {
+          "id": "t2-s3-n3",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "Messengers came. Soumaoro had seized Kangaba, and the people begged Sundiata to return.",
+          "next": "t2-s3-n4"
+        },
+        {
+          "id": "t2-s3-n4",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "And so the lion turned towards home. But a lion does not walk alone. Come, run!",
+          "next": null
+        }
+      ]
+    },
+    {
+      "id": "t2-s4",
+      "title": "The Battle of Kirina",
+      "area": "kirina",
+      "final": true,
+      "playerStart": {
+        "x": 120,
+        "y": 230
+      },
+      "npc": {
+        "name": "Jeli Balla",
+        "x": 700,
+        "y": 300,
+        "sprite": "griot"
+      },
+      "props": [
+        {
+          "key": "rock",
+          "x": 200,
+          "y": 500
+        },
+        {
+          "key": "bush",
+          "x": 700,
+          "y": 500
+        }
+      ],
+      "items": [
+        {
+          "id": "t2-i10",
+          "prop": "tent",
+          "x": 330,
+          "y": 300,
+          "title": "The allied camp",
+          "text": "Tellers say Sundiata gathered allies from many peoples, among them Fakoli, a commander who left Soumaoro's side to join him."
+        },
+        {
+          "id": "t2-i11",
+          "prop": "spears",
+          "x": 540,
+          "y": 440,
+          "title": "Spears and shield",
+          "text": "Soumaoro was feared, and in the epic he was said to be a powerful sorcerer. Sundiata's army relied on unity as much as on weapons."
+        },
+        {
+          "id": "t2-i12",
+          "prop": "campfire",
+          "x": 860,
+          "y": 350,
+          "title": "The war council",
+          "text": "Before the battle, leaders sat together to plan. The epic treats this council as important as the fighting itself."
+        }
+      ],
+      "startNode": "t2-s4-n1",
+      "nodes": [
+        {
+          "id": "t2-s4-n1",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "Many leaders joined Sundiata: warriors, hunters and even a general from Soumaoro's own side. Why did they follow him?",
+          "next": "t2-s4-d1"
+        },
+        {
+          "id": "t2-s4-d1",
+          "type": "decision",
+          "prompt": "Why did so many leaders follow Sundiata?",
+          "options": [
+            {
+              "id": "a",
+              "text": "He promised them all riches.",
+              "outcome": "The epic says little about riches. It speaks of trust.",
+              "next": "t2-s4-c1"
+            },
+            {
+              "id": "b",
+              "text": "He united them around a shared cause.",
+              "outcome": "Yes. His greatest strength was bringing people together.",
+              "next": "t2-s4-c1"
+            },
+            {
+              "id": "c",
+              "text": "He was simply the strongest fighter.",
+              "outcome": "He was brave, but the epic says wise leadership mattered more.",
+              "next": "t2-s4-c1"
+            }
+          ]
+        },
+        {
+          "id": "t2-s4-c1",
+          "type": "context",
+          "title": "The Battle of Kirina",
+          "text": "Around 1235, Sundiata's allied army defeated the forces of Soumaoro Kanté at the Battle of Kirina. Soumaoro ruled the Sosso kingdom. After the victory the Mande lands were united under Sundiata, remembered as the founder of the Mali Empire. Our knowledge comes mostly from oral tradition, and the date is traditional.",
+          "next": "t2-s4-n2",
+          "unlocksCodex": [
+            "codex-kirina",
+            "codex-soumaoro"
+          ]
+        },
+        {
+          "id": "t2-s4-n2",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "After the battle, Sundiata called the leaders together. They agreed on rules for living in peace, which jeliw still recite today.",
+          "next": "t2-s4-c2"
+        },
+        {
+          "id": "t2-s4-c2",
+          "type": "context",
+          "title": "The Mali Empire",
+          "text": "The Mali Empire grew from Sundiata's victory and became one of the largest states in West Africa, rich in gold and trade. A later ruler, Mansa Musa, became famous worldwide for his pilgrimage to Mecca in 1324. Timbuktu grew into a centre of learning under Mali's rule.",
+          "next": "t2-s4-n3",
+          "unlocksCodex": [
+            "codex-mali-empire",
+            "codex-kouroukan"
+          ]
+        },
+        {
+          "id": "t2-s4-n3",
+          "type": "line",
+          "speaker": "Jeli Balla",
+          "text": "The lion's path ends here, but the story begins again whenever a jeli plays. Now you carry it too. Well walked.",
           "next": null
         }
       ]
