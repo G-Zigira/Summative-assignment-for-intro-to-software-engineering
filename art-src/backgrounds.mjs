@@ -66,6 +66,14 @@ export function title() {
   [[820, 300, 1], [900, 270, 0.8], [980, 320, 0.9], [1060, 285, 0.7]].forEach(([x, y, s]) => {
     birds += `<path d="M${x - 16 * s} ${y} Q${x - 8 * s} ${y - 12 * s} ${x} ${y} Q${x + 8 * s} ${y - 12 * s} ${x + 16 * s} ${y}" stroke="#1d0f1c" stroke-width="3" fill="none" stroke-linecap="round"/>`;
   });
+  let rays = '', clouds = '', village = '', grass = '', flies = '';
+  for (let i = 0; i < 9; i++) { const a = -Math.PI / 2 + (i - 4) * 0.2; rays += `<path d="M620 770 L${620 + Math.cos(a - 0.04) * 1500} ${770 + Math.sin(a - 0.04) * 1500} L${620 + Math.cos(a + 0.04) * 1500} ${770 + Math.sin(a + 0.04) * 1500} Z" fill="#ffd98f" opacity=".05"/>`; }
+  [[300, 380, 1.3], [1240, 330, 1.0], [1700, 440, 1.2], [760, 470, 0.9]].forEach(([x, y, k]) => { clouds += `<g fill="#f0a0a0" opacity=".22" transform="translate(${x} ${y}) scale(${k})"><ellipse rx="190" ry="16"/><ellipse cx="90" cy="-16" rx="120" ry="12"/><ellipse cx="-100" cy="14" rx="140" ry="10"/></g>`; });
+  [[330, 826, 0.9, true], [470, 832, 0.7, false], [1330, 832, 0.8, true], [1470, 828, 1.0, false], [1620, 834, 0.7, true]].forEach(([x, y, k, lit]) => {
+    village += `<g transform="translate(${x} ${y}) scale(${k})"><path d="M-46 0 L-46 -40 Q0 -50 46 -40 L46 0 Z" fill="#1a0d17"/><path d="M-66 -38 L0 -110 L66 -38 Q0 -28 -66 -38 Z" fill="#150a13"/>${lit ? '<ellipse cy="-14" rx="44" ry="26" fill="#ffb347" opacity=".35"/><path d="M-9 0 L-9 -24 Q0 -32 9 -24 L9 0 Z" fill="#ffb347"/>' : ''}</g>`;
+  });
+  for (let i = 0; i < 160; i++) { const x = r() * W, y = 1040 + r() * 40, h = 30 + r() * 50; grass += `<path d="M${x} ${y} q${r() * 16 - 8} -${h / 2} ${r() * 24 - 12} -${h}" stroke="#0e070d" stroke-width="${3 + r() * 3}" fill="none" stroke-linecap="round"/>`; }
+  for (let i = 0; i < 36; i++) flies += `<circle cx="${r() * W}" cy="${700 + r() * 340}" r="${2 + r() * 3}" fill="#ffe08a" opacity="${0.4 + r() * 0.5}"/>`;
   const inner = `
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -85,6 +93,7 @@ export function title() {
   ${ridge(820, 60, 5, '#4a2142', 0.95, H, 170)}
   <rect y="840" width="${W}" height="${H - 840}" fill="url(#ground)"/>
   <path d="M780 842 L1010 842 L1360 ${H} L420 ${H} Z" fill="${C.dusk4}" opacity=".16"/>
+  ${rays}${clouds}${village}
   ${acacia(520, 850, 1.1, '#1a0d17')}${acacia(1080, 846, 0.8, '#1a0d17')}${acacia(1250, 850, 0.65, '#1a0d17')}
   ${baobabSilhouette(220, 1030, 1.15, '#120a10')}
   ${baobabSilhouette(1800, 1010, 0.95, '#120a10')}
@@ -93,6 +102,7 @@ export function title() {
     <circle r="138" fill="none" stroke="${C.gold}" stroke-width="2.5" opacity=".7"/>
     <g transform="translate(0 14)">${sankofaBirdShape(C.gold, 2.1)}</g>
   </g>
+  ${flies}${grass}
   <rect width="${W}" height="${H}" filter="url(#grain)"/>
   ${vignette(0.5)}`;
   return { svg: svgDoc(W, H, inner), width: W, height: H };

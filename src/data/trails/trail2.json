@@ -13,7 +13,7 @@
     {
       "id": "t2-s1",
       "title": "A Prophecy in Kangaba",
-      "area": "courtyard",
+      "area": "kangaba-hall",
       "nextScene": "t2-s2",
       "playerStart": {
         "x": 120,
@@ -27,14 +27,14 @@
       },
       "props": [
         {
-          "key": "carved-door",
-          "x": 480,
-          "y": 172
+          "key": "pots",
+          "x": 150,
+          "y": 232
         },
         {
-          "key": "baobab",
-          "x": 700,
-          "y": 200
+          "key": "drum",
+          "x": 840,
+          "y": 232
         },
         {
           "key": "bush",
@@ -152,7 +152,7 @@
     {
       "id": "t2-s2",
       "title": "The Iron Rod",
-      "area": "wall-garden",
+      "area": "forge",
       "nextScene": "t2-s3",
       "playerStart": {
         "x": 120,
@@ -280,7 +280,7 @@
     {
       "id": "t2-s3",
       "title": "Exile on the Road",
-      "area": "road",
+      "area": "exile-plains",
       "nextScene": "t2-s4",
       "playerStart": {
         "x": 120,

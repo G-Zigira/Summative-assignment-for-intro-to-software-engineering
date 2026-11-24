@@ -17,6 +17,8 @@ import { BACKGROUNDS } from './backgrounds.mjs';
 import { runnerSky, runnerGround } from './runner.mjs';
 import { MORE_PROPS, MORE_BACKGROUNDS } from './more.mjs';
 import { BATTLE_PROPS, battleSky } from './battle.mjs';
+import { PLACE_BACKGROUNDS } from './places.mjs';
+import { themeJobs } from './runner-themes.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const assets = (...p) => path.join(root, 'public', 'assets', ...p);
@@ -30,12 +32,13 @@ for (const name of Object.keys(STYLES)) {
 for (const [name, make] of Object.entries({ ...PROPS, ...MORE_PROPS, ...BATTLE_PROPS })) {
   jobs.push({ name, ...make(), type: 'png', out: assets('props', `${name}.png`), svgOut: svgs(`prop-${name}.svg`) });
 }
-for (const [name, make] of Object.entries({ ...BACKGROUNDS, ...MORE_BACKGROUNDS })) {
+for (const [name, make] of Object.entries({ ...BACKGROUNDS, ...MORE_BACKGROUNDS, ...PLACE_BACKGROUNDS })) {
   jobs.push({ name, ...make(), type: 'jpeg', quality: 80, out: assets('backgrounds', `${name}.jpg`), svgOut: svgs(`bg-${name}.svg`) });
 }
 jobs.push({ name: 'runner-sky', ...runnerSky(), type: 'jpeg', quality: 80, out: assets('backgrounds', 'runner-sky.jpg'), svgOut: svgs('bg-runner-sky.svg') });
 jobs.push({ name: 'battle-sky', ...battleSky(), type: 'jpeg', quality: 80, out: assets('backgrounds', 'battle-sky.jpg'), svgOut: svgs('bg-battle-sky.svg') });
 jobs.push({ name: 'runner-ground', ...runnerGround(), type: 'png', out: assets('backgrounds', 'runner-ground.png'), svgOut: svgs('bg-runner-ground.svg') });
+jobs.push(...themeJobs(assets, svgs));
 jobs.push({ name: 'emblem', ...emblemIcon(), type: 'png', out: assets('ui', 'emblem.png'), svgOut: svgs('ui-emblem.svg') });
 
 await renderAll(jobs.filter((j) => !only || j.name.includes(only)));

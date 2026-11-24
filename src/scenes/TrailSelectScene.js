@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { CONFIG } from '../config.js';
-import { COLORS } from '../ui/theme.js';
+import { COLORS, FONT_DISPLAY } from '../ui/theme.js';
+import { fadeIn } from '../ui/fx.js';
 import { makeButton, makeText, minTarget } from '../ui/button.js';
 import { session } from '../session.js';
 import { TRAILS } from '../content/index.js';
@@ -22,7 +23,8 @@ export class TrailSelectScene extends Phaser.Scene {
       this.add.rectangle(W / 2, H / 2, W, H, 0x000000, 0.62).setDepth(-1); // dim so buttons stay readable
     }
     audio.playMusic('title');
-    makeText(this, W / 2, 50, 'Choose a trail', 38, { fontStyle: 'bold', color: COLORS.accentText }).setOrigin(0.5);
+    fadeIn(this);
+    makeText(this, W / 2, 50, 'Choose a trail', 42, { fontFamily: FONT_DISPLAY, color: COLORS.accentText, stroke: '#2a1522', strokeThickness: 6 }).setOrigin(0.5);
 
     const pieces = (trail) => {
       const { found, total } = fragmentProgress(session.save, trail);

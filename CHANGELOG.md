@@ -5,6 +5,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-24
+
+### Added
+- Five new places so no story scene reuses a picture: Kangaba hall, the forge, the exile plains, the farm village and the village square (`art-src/places.mjs`). The Lion's Path and The Web of Wisdom now have a different background in every scene
+- The running minigame has five new looks (ember, desert, forest, village, battle), each with its own sky, ground and three obstacle pictures. The look follows the place you travel to; the Mini Games menu picks a random look each run. Rules are unchanged (`src/assets/runnerThemes.js`)
+- Atmosphere: a soft dark edge and floating lights that fit each place (embers at the forge, fireflies in the forest, dust on the plains...), fade-ins between screens (`src/ui/fx.js`)
+- Marcellus heading font (bundled, works offline)
+- Audio helper: `npm run audio:list` and `npm run audio:set -- <file> <slot>`, and a step-by-step guide `docs/AUDIO-HOWTO.md`
+- Tests that every picture, runner theme and sound file the game asks for exists, and that no story scene repeats a background
+
+### Changed
+- Redrawn title screen (village skyline, sun rays, clouds, fireflies, glowing emblem) with a softer menu panel
+- New look for buttons (rounded, highlight, gold frame, hover and press animation), dialogue panels and the Mini Games cards
+- Sound files: the game now tries `.mp3` first, so one mp3 per sound is enough
+- The five new places have their own music slots/files (copies of earlier loops, ready to replace)
+
 ## [0.5.0] - 2026-11-24
 
 ### Added

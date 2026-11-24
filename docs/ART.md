@@ -26,6 +26,12 @@ Add the drawing and register it (`PROPS`, `STYLES`, `BACKGROUNDS`), add its name
 
 If a picture file is missing the game still runs and shows plain shapes instead.
 
+## Added in 0.6.0
+- `art-src/places.mjs`: `kangaba-hall`, `forge`, `exile-plains`, `farm-village`, `village-square` (1920x1080 JPG, horizon at the top 345 px like the other areas). Build one with `node art-src/build-art.mjs forge`.
+- `art-src/runner-themes.mjs`: for each theme `rt-<theme>-sky.jpg`, `rt-<theme>-ground.png`, and obstacles `rt-<theme>-a/b/c.png` (small about 130x90, medium about 150x110, tall about 120x280, drawn at 2x). Which theme plays where is in `src/assets/runnerThemes.js` (`AREA_THEME`). To add a theme: add art, add an entry in `RUNNER_THEMES`, map areas to it.
+- Title screen: `title` in `art-src/backgrounds.mjs` (redrawn). Buttons and panels are drawn in code (`src/ui/button.js`, `src/ui/dialogueUI.js`); colours are in `src/ui/theme.js`.
+- Effects (vignette, floating lights, fade) are in `src/ui/fx.js`; `AMBIENT_FOR_AREA` chooses the lights for each place.
+
 ## Added in 0.5.0
 `art-src/battle.mjs`: props `horse-a`, `horse-b`, `horse-jump` (gallop frames), `soldier-a`, `soldier-b`, `spear`, `know-scroll`, `know-adinkra`, `know-light`, `bad-thorn`, `bad-stone`, `bad-vial`; background `battle-sky`. Build only these with `node art-src/build-art.mjs horse` (the argument filters by name) so pictures you replaced are not overwritten.
 

@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { addAmbient, fadeIn, AMBIENT_FOR_AREA } from '../ui/fx.js';
 import { CONFIG } from '../config.js';
 import { COLORS, AREA_COLORS } from '../ui/theme.js';
 import { makeButton, makeText } from '../ui/button.js';
@@ -140,6 +141,10 @@ export class GameScene extends Phaser.Scene {
       Object.values(this.keys).forEach((k) => k.reset());
     });
     this.events.once('shutdown', () => this.touch?.destroy());
+
+    // Atmosphere: lights that fit the place (see ui/fx.js). Purely visual.
+    addAmbient(this, AMBIENT_FOR_AREA[this.story?.area] ?? 'dust', { top: WALK_TOP });
+    fadeIn(this, 300);
 
     // Result of the autosave that happened just before this scene was restarted.
     if (this.startData.saveResult) this.#showSaveResult(this.startData.saveResult);

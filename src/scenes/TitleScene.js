@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { CONFIG } from '../config.js';
-import { COLORS } from '../ui/theme.js';
+import { COLORS, FONT_DISPLAY } from '../ui/theme.js';
+import { addAmbient, fadeIn, bake } from '../ui/fx.js';
 import { makeButton, makeText } from '../ui/button.js';
 import { session, startNewGame, refreshFromStorage } from '../session.js';
 import { bgKey, hasTexture } from '../assets/manifest.js';
@@ -18,14 +19,26 @@ export class TitleScene extends Phaser.Scene {
     if (hasTexture(this, bgKey('title'))) {
       this.add.image(W / 2, H / 2, bgKey('title')).setScale(0.5).setDepth(-2);
     }
-    // Dark bands keep the text readable (NFR 3: contrast >= 4.5:1) over the picture.
-    this.add.rectangle(W / 2, 140, W, 150, 0x000000, 0.55).setDepth(-1);
-    this.add.rectangle(W / 2, 346, 400, 298, 0x000000, 0.5).setDepth(-1);
+    // A soft dark fade at the top and a rounded panel behind the menu keep the text readable
+    // (NFR 3: contrast >= 4.5:1) without hiding the picture.
+    this.add.image(0, 0, bake(this, 'title-scrim', W, 270, (g) => {
+      g.fillGradientStyle(0x000000, 0x000000, 0x000000, 0x000000, 0.78, 0.78, 0, 0).fillRect(0, 0, W, 270);
+    })).setOrigin(0).setDepth(-1);
+    this.add.image(W / 2, 345, bake(this, 'title-panel', 424, 302, (g) => {
+      g.fillStyle(0x000000, 0.5).fillRoundedRect(2, 2, 420, 298, 22);
+      g.lineStyle(2, COLORS.accent, 0.55).strokeRoundedRect(2, 2, 420, 298, 22);
+      g.lineStyle(1, COLORS.accent, 0.25).strokeRoundedRect(9, 9, 406, 284, 17);
+    })).setDepth(-1);
+    // The emblem in the picture glows softly.
+    const glow = this.add.circle(780, 320, 190, 0xf2c14e, 0.10).setDepth(-1.5);
+    this.tweens.add({ targets: glow, alpha: 0.03, duration: 2400, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+    addAmbient(this, 'fireflies', { top: 300, depth: -1.2 });
+    fadeIn(this, 450);
     audio.playMusic('title');
 
-    makeText(this, W / 2, 110, 'Sankofa Trails', 54, { fontStyle: 'bold', color: COLORS.accentText }).setOrigin(0.5);
-    makeText(this, W / 2, 170, 'Go back and fetch it: walk the trails of African history.', 20, {
-      color: COLORS.text,
+    makeText(this, W / 2, 104, 'Sankofa Trails', 66, { fontFamily: FONT_DISPLAY, color: COLORS.accentText, stroke: '#2a1522', strokeThickness: 8, shadow: { offsetX: 0, offsetY: 4, color: '#000', blur: 10, fill: true } }).setOrigin(0.5);
+    makeText(this, W / 2, 166, 'Go back and fetch it: walk the trails of African history.', 20, {
+      color: COLORS.text, backgroundColor: '#00000099', padding: { x: 14, y: 5 },
     }).setOrigin(0.5);
 
     const canContinue = session.loadStatus === 'ok';

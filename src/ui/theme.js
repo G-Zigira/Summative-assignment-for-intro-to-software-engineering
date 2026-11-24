@@ -3,6 +3,9 @@
 
 export const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
 
+// Headings use Marcellus (a free serif, bundled with the game so it works offline); everything else uses system fonts.
+export const FONT_DISPLAY = 'Marcellus, Georgia, "Times New Roman", serif';
+
 export const COLORS = {
   background: 0x14110f,
   panel: 0x1f1a16,

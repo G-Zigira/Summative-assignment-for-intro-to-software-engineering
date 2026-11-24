@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { CONFIG } from '../config.js';
-import { COLORS } from '../ui/theme.js';
+import { COLORS, FONT_DISPLAY } from '../ui/theme.js';
+import { fadeIn, bake } from '../ui/fx.js';
 import { makeButton, makeText } from '../ui/button.js';
 import { bgKey, propKey, hasTexture } from '../assets/manifest.js';
 import { audio } from '../audio/audioManager.js';
@@ -22,18 +23,23 @@ export class ArcadeScene extends Phaser.Scene {
     this.add.rectangle(W / 2, H / 2, W, H, 0x000000, 0.62).setDepth(-2);
     audio.playMusic('title');
 
-    makeText(this, W / 2, 44, 'Mini Games', 40, { fontStyle: 'bold', color: COLORS.accentText }).setOrigin(0.5);
+    fadeIn(this);
+    makeText(this, W / 2, 44, 'Mini Games', 44, { fontFamily: FONT_DISPLAY, color: COLORS.accentText, stroke: '#2a1522', strokeThickness: 6 }).setOrigin(0.5);
     makeText(this, W / 2, 84, 'Play as long as you like. The game ends when you fail or quit.', 18, { color: COLORS.text }).setOrigin(0.5);
 
     const best = bests();
     ARCADE_GAMES.forEach((g, i) => {
       const y = 170 + i * 112;
-      this.add.rectangle(W / 2, y, 880, 100, 0x1f1a16, 0.9).setStrokeStyle(2, COLORS.border);
+      this.add.image(W / 2, y, bake(this, 'arcade-card', 892, 112, (g) => {
+        g.fillStyle(0x000000, 0.35).fillRoundedRect(8, 14, 880, 100, 18);
+        g.fillStyle(0x1f1a16, 0.92).fillRoundedRect(6, 8, 880, 100, 18);
+        g.lineStyle(2, COLORS.accent, 0.6).strokeRoundedRect(6, 8, 880, 100, 18);
+      }));
       const icon = propKey(ICONS[g.id]);
       if (hasTexture(this, icon)) this.add.image(W / 2 - 400, y, icon).setScale(g.id === 'horse' ? 0.5 : 0.7);
-      makeText(this, W / 2 - 340, y - 44, g.title, 26, { fontStyle: 'bold', color: COLORS.accentText });
-      makeText(this, W / 2 - 340, y - 8, g.blurb, 16, { color: COLORS.text, wordWrap: { width: 560 } });
-      makeText(this, W / 2 - 340, y + 30, `Best: ${best[g.id]} ${g.unit}`, 16, { color: COLORS.contextText });
+      makeText(this, W / 2 - 340, y - 48, g.title, 28, { fontFamily: FONT_DISPLAY, color: COLORS.accentText });
+      makeText(this, W / 2 - 340, y - 10, g.blurb, 16, { color: COLORS.text, wordWrap: { width: 560 } });
+      makeText(this, W / 2 - 340, y + 24, `Best: ${best[g.id]} ${g.unit}`, 16, { color: COLORS.contextText });
       makeButton(this, {
         x: W / 2 + 340, y, width: 150, height: 64, label: 'Play',
         onClick: () => this.scene.start(g.scene, { mode: 'arcade' }),

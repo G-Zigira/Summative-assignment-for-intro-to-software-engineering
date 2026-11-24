@@ -99,7 +99,7 @@ test.describe('wisdom catch', () => {
     await page.waitForFunction((n) => window.__game.scene.getScene('BasketScene').run.shells === n, start - 2);
     const x0 = await page.evaluate(() => window.__game.scene.getScene('BasketScene').run.x);
     await page.keyboard.down('ArrowLeft');
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(900);
     await page.keyboard.up('ArrowLeft');
     expect(await page.evaluate(() => window.__game.scene.getScene('BasketScene').run.x)).toBeLessThan(x0 - 100);
     expect(errors).toEqual([]);
@@ -117,4 +117,18 @@ test.describe('wisdom catch', () => {
     await page.keyboard.press('Space', { delay: 40 });
     await page.waitForFunction(() => window.__game.scene.getScene('BasketScene').state === 'running');
   });
+});
+
+test('the running game looks different depending on where you are going', async ({ page }) => {
+  await page.goto('/');
+  await waitForScene(page, 'TitleScene');
+  const themeFor = async (trailId, sceneId) => {
+    await page.evaluate(([t, s]) => window.__game.scene.getScenes(true)[0].scene.start('RunnerScene', { trailId: t, sceneId: s }), [trailId, sceneId]);
+    await page.waitForFunction(() => window.__game.scene.getScene('RunnerScene')?.themeName && window.__game.scene.isActive('RunnerScene'));
+    return page.evaluate(() => window.__game.scene.getScene('RunnerScene').themeName);
+  };
+  expect(await themeFor('trail2', 't2-s2')).toBe('ember');
+  expect(await themeFor('trail2', 't2-s4')).toBe('battle');
+  expect(await themeFor('trail3', 't3-s2')).toBe('village');
+  expect(await themeFor('trail3', 't3-s3')).toBe('forest');
 });
